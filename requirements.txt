@@ -1,1 +1,1 @@
-pip install ffmpeg-python
+pip install halo
