@@ -53,7 +53,6 @@ def main():
                 video_html = video.text
                 video_id = video_html.split(f'/{ID}')[0].split('/')[-1]
                 # print(video_id)
-                # Cardinal.last_requets(Yui.final_construct(video_id, ID), i, Yui.animes_search(url_anime_orrigin), Yui.saisons_search(url_anime_orrigin))
                 Cardinal.last_requets(Yui.final_construct(video_id, ID), i, Yui.animes_search(url_anime_orrigin), Yui.saisons_search(url_anime_orrigin), languages, lang)
 
         else:
@@ -61,7 +60,6 @@ def main():
         
     except KeyboardInterrupt:
         print(languages[lang]["keyboard_interupt"])
-
 
 if __name__ == "__main__":
     main()
