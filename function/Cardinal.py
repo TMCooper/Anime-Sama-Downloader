@@ -2,9 +2,8 @@ import requests
 import os
 
 class Cardinal:
+    def last_requets(url, id, anime_name, anime_saison, languages, lang):
 
-    def last_requets(url, id, anime_name, anime_saison):
-        
         headers = {
             "Host": "video.sibnet.ru",
             "Accept": "*/*",
@@ -26,9 +25,9 @@ class Cardinal:
         response = requests.get(url, headers=headers)
 
         if not os.path.exists(f'dist/{anime_name}/{anime_saison}'):
-                print("creation of directory")
                 os.makedirs(f'dist/{anime_name}/{anime_saison}')
-
 
         with open(f'dist/{anime_name}/{anime_saison}/EP{id}.mp4', "wb") as f:
             f.write(response.content)
+        
+        print(languages[lang]["success_download"].format(title=anime_name, path=f'dist/{anime_name}/{anime_saison}/EP{id}.mp4'))
