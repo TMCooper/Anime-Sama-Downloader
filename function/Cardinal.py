@@ -3,6 +3,8 @@ import os
 
 class Cardinal:
 
+
+    @staticmethod
     def last_requets(url, id, anime_name, anime_saison):
         
         headers = {
