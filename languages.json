@@ -2,14 +2,12 @@
     "fr" : {
         "Exit_q" : "Pour quiter le programme tapper Q",
         "Requests_user_link" : "Entrez le lien de l'animer : ",
-        "success_download" : "{title} telechargee avec succes vers {path}",
         "keyboard_interupt" : "\nL utilisateur a saisit CTRL + C arret du programme ...",
         "url_question" : "Quel est le lien de l'animer que vous souhaiter telechargee ? : "
     },
     "en" : {
         "Exit_q": "To exit the program type Q",
         "Requests_user_link": "Enter the video link: ",
-        "success_download": "{title} successfully downloaded to {path}",
         "keyboard_interupt": "\nThe user pressed CTRL + C, stopping the program...",
         "url_question": "What is the link to the animation you would like to download?: "
     }
