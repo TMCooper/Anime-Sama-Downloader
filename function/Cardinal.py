@@ -1,5 +1,7 @@
 import os
 import subprocess
+import platform
+
 
 class Cardinal:
     def last_requets(url, id, anime_name, anime_saison, languages, lang):
@@ -35,6 +37,10 @@ class Cardinal:
 
         # Exécuter la commande avec subprocess
         subprocess.run(command)
-        
-        # Afficher le message de succès
-        print(languages[lang]["success_download"].format(title=anime_name, path=f'dist/{anime_name}/{anime_saison}/EP{id}.mp4'))
+
+        os_name = platform.system()
+                
+        if os_name == "Windows":
+            subprocess.run("cls", shell=True)
+        elif os_name == "Linux" or "Darwin":
+            subprocess.run("clear", shell=True)
