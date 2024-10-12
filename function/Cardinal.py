@@ -4,7 +4,7 @@ import platform
 
 
 class Cardinal:
-    def last_requets(url, id, anime_name, anime_saison, languages, lang):
+    def last_requets(url, id, anime_name, anime_saison):
 
         # Commande curl à exécuter
 
@@ -39,7 +39,7 @@ class Cardinal:
         subprocess.run(command)
 
         os_name = platform.system()
-                
+
         if os_name == "Windows":
             subprocess.run("cls", shell=True)
         elif os_name == "Linux" or "Darwin":
