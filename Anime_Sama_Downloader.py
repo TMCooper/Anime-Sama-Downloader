@@ -40,11 +40,14 @@ def main():
             url_episodes = reponse.text
             # print(url_episodes)
             url_episode = url_episodes
-            url_episodes = url_episodes.replace("'", "").replace(",", "").split('var')[1].split('\n')[1:-4]
+            # print (url_episode)
+            url_episodes = url_episodes.replace("'", "").replace(",", "").split('var')[1].split('\n')[1:-3]
             # print(url_episodes)
             
             i = 0
             for url_episode in url_episodes:
+                if not "videoid=" in url_episode:
+                    continue
                 # print(f'url_episode {i} : {url_episode}')
                 i += 1
                 ID = url_episode.split("videoid=")[1]
@@ -53,7 +56,7 @@ def main():
                 video_html = video.text
                 video_id = video_html.split(f'/{ID}')[0].split('/')[-1]
                 # print(video_id)
-                Cardinal.last_requets(Yui.final_construct(video_id, ID), i, Yui.animes_search(url_anime_orrigin), Yui.saisons_search(url_anime_orrigin), languages, lang)
+                Cardinal.last_requets(Yui.final_construct(video_id, ID), i, Yui.animes_search(url_anime_orrigin), Yui.saisons_search(url_anime_orrigin))
 
         else:
             print(f"Erreur lors de la requête : {response.status_code}")
