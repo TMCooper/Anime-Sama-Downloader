@@ -23,8 +23,9 @@ def main():
         # url_anime_orrigin = input(languages[lang]["url_question"])
 
         # url_anime_orrigin = "https://anime-sama.fr/catalogue/komi-cant-communicate/saison1/vostfr/"
-        url_anime_orrigin = "https://anime-sama.fr/catalogue/roshidere/saison1/vostfr/"
-        # url_anime_orrigin = "https://anime-sama.fr/catalogue/frieren/saison1/vostfr/"
+        # url_anime_orrigin = "https://anime-sama.fr/catalogue/roshidere/saison1/vostfr/"
+        # url_anime_orrigin = "https://anime-sama.fr/catalogue/the-misfit-of-demon-king-academy/saison1/vostfr/"
+        url_anime_orrigin = "https://anime-sama.fr/catalogue/frieren/saison1/vostfr/"
         # url_anime_orrigin = "https://anime-sama.fr/catalogue/konosuba/saison1/vostfr/"
         url_ru = ""
 
@@ -43,8 +44,9 @@ def main():
             # print(url_episodes)
             url_episode = url_episodes
             # print (url_episode)
-            url_episodes = url_episodes.replace("'", "").replace(",", "").split('var')[1].split('\n')[1:-3]
-            # print(url_episodes)
+            # url_episodes = url_episodes.replace("'", "").replace(",", "").split('var')[s for s in url_episodes if 'eps1' in s].split('\n')[1:-3]
+            url_episodes = [s for s in url_episodes.split('var') if 'eps1' in s][0].replace("'", "").replace(",", "").split('\n')
+            print(url_episodes)
             
             i = 0
             for url_episode in url_episodes:
