@@ -20,10 +20,12 @@ def main():
 
         # URL cible
         print(languages[lang]["Exit_q"])
-        url_anime_orrigin = input(languages[lang]["url_question"])
+        # url_anime_orrigin = input(languages[lang]["url_question"])
 
         # url_anime_orrigin = "https://anime-sama.fr/catalogue/komi-cant-communicate/saison1/vostfr/"
-        url_anime_orrigin = "https://anime-sama.fr/catalogue/konosuba/saison1/vostfr/"
+        url_anime_orrigin = "https://anime-sama.fr/catalogue/roshidere/saison1/vostfr/"
+        # url_anime_orrigin = "https://anime-sama.fr/catalogue/frieren/saison1/vostfr/"
+        # url_anime_orrigin = "https://anime-sama.fr/catalogue/konosuba/saison1/vostfr/"
         url_ru = ""
 
         # Faire une requête GET à l'URL sans headers
@@ -54,9 +56,8 @@ def main():
 
                 video = requests.get(url_episode)
                 video_html = video.text
-                video_id = video_html.split(f'/{ID}')[0].split('/')[-1]
-                # print(video_id)
-                Cardinal.last_requets(Yui.final_construct(video_id, ID), i, Yui.animes_search(url_anime_orrigin), Yui.saisons_search(url_anime_orrigin))
+                video_id = video_html.split(f'/v/')[1].split('/')[0]
+                Cardinal.last_requets(Yui.final_construct(video_id, ID), i, Yui.animes_search(url_anime_orrigin), Yui.saisons_search(url_anime_orrigin), ID)
 
         else:
             print(f"Erreur lors de la requête : {response.status_code}")
