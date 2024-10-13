@@ -21,12 +21,6 @@ def main():
         # URL cible
         print(languages[lang]["Exit_q"])
         url_anime_orrigin = input(languages[lang]["url_question"])
-
-        # url_anime_orrigin = "https://anime-sama.fr/catalogue/komi-cant-communicate/saison1/vostfr/"
-        # url_anime_orrigin = "https://anime-sama.fr/catalogue/roshidere/saison1/vostfr/"
-        # url_anime_orrigin = "https://anime-sama.fr/catalogue/the-misfit-of-demon-king-academy/saison1/vostfr/"
-        # url_anime_orrigin = "https://anime-sama.fr/catalogue/frieren/saison1/vostfr/"
-        # url_anime_orrigin = "https://anime-sama.fr/catalogue/konosuba/saison1/vostfr/"
         url_ru = ""
 
         # Faire une requête GET à l'URL sans headers
