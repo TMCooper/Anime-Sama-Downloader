@@ -22,8 +22,11 @@ class Yui:
         url = url+EPISODE+serv_file
         return url
     
-    def final_construct(video_id, ID):        
-        return f'https://video.sibnet.ru/v/{video_id}/{ID}.mp4'
+    def final_construct(video_id, ID):
+        base_url = 'https://video.sibnet.ru/v/'+video_id+"/"+f'{int(ID)}'+".mp4"
+        # print(ID+".mp4")
+        print(base_url)
+        return base_url
     
     def animes_search(url_anime_orrigin):
         return url_anime_orrigin.split("/")[-4]
