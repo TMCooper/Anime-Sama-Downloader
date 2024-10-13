@@ -4,7 +4,7 @@ import platform
 
 
 class Cardinal:
-    def last_requets(url, id, anime_name, anime_saison):
+    def last_requets(url, id, anime_name, anime_saison, ID):
 
         # Commande curl à exécuter
 
@@ -13,6 +13,8 @@ class Cardinal:
         
         # Chemin du fichier de sortie
         output_file = f'dist/{anime_name}/{anime_saison}/EP{id}.mp4'
+
+        # print(url)
 
         # Commande curl à exécuter
         command = [
@@ -24,7 +26,7 @@ class Cardinal:
             "--header", "Cookie: sib_userid=1c11abe8766de830c84b3db0d7042769; OAID=745248aa553ce5209d4d5e908a9a5fda",
             "--header", "Host: video.sibnet.ru",
             "--header", "Range: bytes=0-",
-            "--header", f"Referer: https://video.sibnet.ru/shell.php?videoid={id}",
+            "--header", f"Referer: https://video.sibnet.ru/shell.php?videoid={ID}",
             "--header", "Sec-Fetch-Dest: video",
             "--header", "Sec-Fetch-Mode: no-cors",
             "--header", "Sec-Fetch-Site: same-origin",
@@ -36,7 +38,7 @@ class Cardinal:
         ]
 
         # Exécuter la commande avec subprocess
-        subprocess.run(command)
+        subprocess.run(command, shell=True)
 
         os_name = platform.system()
 
