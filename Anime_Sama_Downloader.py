@@ -2,10 +2,10 @@ from function.__init__ import *
 import requests
 import json
 
-
 def main():
 
     try:
+
         valid_languages = ["en", "fr"]
 
         with open('languages.json', 'r') as lang_file:
@@ -21,6 +21,7 @@ def main():
         # URL cible
         print(languages[lang]["Exit_q"])
         url_anime_orrigin = input(languages[lang]["url_question"])
+
         url_ru = ""
 
         # Faire une requête GET à l'URL sans headers
@@ -34,6 +35,7 @@ def main():
             url_ru = Yui.construct(url_anime_orrigin, serv_file)
             # print(url_ru)
             reponse = requests.get(url_ru)
+            
             url_episodes = reponse.text
             # print(url_episodes)
             url_episode = url_episodes
@@ -48,8 +50,11 @@ def main():
                 # print(f'url_episode {i} : {url_episode}')
                 i += 1
                 ID = url_episode.split("videoid=")[1]
+                print(url_episode)
 
                 video = requests.get(url_episode)
+                print(video.status_code)
+                # print(video)
                 video_html = video.text
                 video_id = video_html.split(f'/v/')[1].split('/')[0]
                 Cardinal.last_requets(Yui.final_construct(video_id, ID), i, Yui.animes_search(url_anime_orrigin), Yui.saisons_search(url_anime_orrigin), ID)
