@@ -53,7 +53,6 @@ def main():
                 print(url_episode)
 
                 video = requests.get(url_episode)
-                print(video.status_code)
                 # print(video)
                 video_html = video.text
                 video_id = video_html.split(f'/v/')[1].split('/')[0]
