@@ -44,6 +44,5 @@ class Cardinal:
 
         if os_name == "Windows":
             subprocess.run("cls", shell=True)
-            print("wow")
         elif os_name == "Linux" or "Darwin":
             subprocess.run("clear", shell=True)
