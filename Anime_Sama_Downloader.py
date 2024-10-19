@@ -50,7 +50,7 @@ def main():
                 # print(f'url_episode {i} : {url_episode}')
                 i += 1
                 ID = url_episode.split("videoid=")[1]
-                print(url_episode)
+                # print(url_episode)
 
                 video = requests.get(url_episode)
                 # print(video)
