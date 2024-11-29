@@ -35,6 +35,7 @@ def main():
             url_ru = Yui.construct(url_anime_orrigin, serv_file)
             # print(url_ru)
             reponse = requests.get(url_ru)
+            # retaper la manière dont les url son récupérer avec pour ojbectif de aire en sorte que cela fonctione a tous les coup peut importe sa position au moment du get sur les lien sib
             
             url_episodes = reponse.text
             # print(url_episodes)
