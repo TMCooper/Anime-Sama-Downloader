@@ -1,6 +1,7 @@
 from function.__init__ import *
 import requests
 import json
+import re
 
 def main():
 
@@ -40,9 +41,9 @@ def main():
             url_episodes = reponse.text
             # print(url_episodes)
             url_episode = url_episodes
-            # print (url_episode)
-            url_episodes = [s for s in url_episodes.split('var') if 'eps1' in s][0].replace("'", "").replace(",", "").split('\n')
-            # print(url_episodes)
+            print (f'url_episode avant split : {url_episode}')
+            url_episodes = re.findall(r"'(https://video\.sibnet\.ru/shell\.php\?videoid=\d+)'", url_episodes)
+            print(f'url_episodes après split : {url_episodes}')
             
             i = 0
             for url_episode in url_episodes:
