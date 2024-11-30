@@ -7,8 +7,8 @@
     },
     "en" : {
         "Exit_q": "To exit the program type Q",
-        "Requests_user_link": "Enter the video link: ",
+        "Requests_user_link": "Enter the video link : ",
         "keyboard_interupt": "\nThe user pressed CTRL + C, stopping the program...",
-        "url_question": "What is the link to the animation you would like to download?: "
+        "url_question": "What is the link to the animation you would like to download ? : "
     }
 }
