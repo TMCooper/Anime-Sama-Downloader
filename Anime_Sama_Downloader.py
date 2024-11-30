@@ -41,9 +41,9 @@ def main():
             url_episodes = reponse.text
             # print(url_episodes)
             url_episode = url_episodes
-            print (f'url_episode avant split : {url_episode}')
+            # print (f'url_episode avant split : {url_episode}')
             url_episodes = re.findall(r"'(https://video\.sibnet\.ru/shell\.php\?videoid=\d+)'", url_episodes)
-            print(f'url_episodes après split : {url_episodes}')
+            # print(f'url_episodes après split : {url_episodes}')
             
             i = 0
             for url_episode in url_episodes:
