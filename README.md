@@ -14,4 +14,4 @@
 
 ## Demo
 
-<img src="./doc/demo.gif" width="100%" align="center">
+<img src="./docs/demo.gif" width="100%" align="center">
