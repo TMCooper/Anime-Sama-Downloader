@@ -11,3 +11,7 @@
 
 ## Warning
 - The downloader can be very slow it don't depend on the program it depends on the server
+
+## Demo
+
+<img src="./doc/demo.gif" width="100%" align="center">
