@@ -30,6 +30,14 @@ def main():
 
         # Vérifier si la requête a réussi
         if response.status_code == 200:
+
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+                "Accept-Language": "en-US,en;q=0.5",
+                "Connection": "keep-alive",
+            }
+
             content = response.text
             serv_file = content.split("episodes.js?")[1].split("'")[0]
 
@@ -49,14 +57,15 @@ def main():
             for url_episode in url_episodes:
                 if not "videoid=" in url_episode:
                     continue
-                # print(f'url_episode {i} : {url_episode}')
+                print(f'url_episode {i} : {url_episode}')
                 i += 1
                 ID = url_episode.split("videoid=")[1]
-                # print(url_episode)
+                # print(ID)
 
-                video = requests.get(url_episode)
+                video = requests.get(url_episode, headers=headers, timeout=30)
                 # print(video)
                 video_html = video.text
+                # print(video_html)
                 video_id = video_html.split(f'/v/')[1].split('/')[0]
                 Cardinal.last_requets(Yui.final_construct(video_id, ID), i, Yui.animes_search(url_anime_orrigin), Yui.saisons_search(url_anime_orrigin), ID)
 
