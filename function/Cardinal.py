@@ -22,19 +22,21 @@ class Cardinal:
             "--header", "Accept: */*",
             "--header", "Accept-Encoding: identity;q=1, *;q=0",
             "--header", "Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+            "--header", "Cache-Control: no-cache",
             "--header", "Connection: keep-alive",
-            "--header", "Cookie: sib_userid=1c11abe8766de830c84b3db0d7042769; OAID=745248aa553ce5209d4d5e908a9a5fda",
-            "--header", "Host: video.sibnet.ru",
+            "--header", "Cookie: sib_userid=fd3787da2292a48bc8e39cb536ed1b20",
+            "--header", "Host: dv26-2.sibnet.ru",
+            "--header", "Pragma: no-cache",
             "--header", "Range: bytes=0-",
-            "--header", f"Referer: https://video.sibnet.ru/shell.php?videoid={ID}",
+            "--header", "Referer: https://video.sibnet.ru/",
             "--header", "Sec-Fetch-Dest: video",
             "--header", "Sec-Fetch-Mode: no-cors",
-            "--header", "Sec-Fetch-Site: same-origin",
-            "--header", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 OPR/113.0.0.0",
-            "--header", 'sec-ch-ua: "Not)A;Brand";v="99", "Opera GX";v="113", "Chromium";v="127"',
+            "--header", "Sec-Fetch-Site: same-site",
+            "--header", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 OPR/117.0.0.0",
+            "--header", 'sec-ch-ua: "Not A(Brand";v="8", "Chromium";v="132", "Opera GX";v="117"',
             "--header", "sec-ch-ua-mobile: ?0",
             "--header", 'sec-ch-ua-platform: "Windows"',
-            "--output", output_file  # Enregistrer vers le fichier de sortie
+            "--output", output_file
         ]
 
         # Exécuter la commande avec subprocess
