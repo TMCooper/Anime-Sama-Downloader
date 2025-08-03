@@ -15,6 +15,7 @@
 ```bash
 playwright install
 ```
+and all is normaly good you can use the software !
 
 ## Demo
 
