@@ -11,6 +11,10 @@
 
 ## Warning
 - The downloader can be very slow it don't depend on the program it depends on the server
+- If you see a message like : ```Looks like Playwright was just installed or updated. Please run the following command to download new browsers: playwright install <3 Playwright Team``` just do : 
+```bash
+playwright install
+```
 
 ## Demo
 
