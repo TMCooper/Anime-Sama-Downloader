@@ -2,8 +2,9 @@ from function.__init__ import *
 import requests
 import json
 import re
+import asyncio
 
-def main():
+async def main():
 
     try:
 
@@ -26,10 +27,10 @@ def main():
         url_ru = ""
 
         # Faire une requête GET à l'URL sans headers
-        response = requests.get(url_anime_orrigin)
+        # response = requests.get(url_anime_orrigin)
+        soup = await Yui.request(url_anime_orrigin)
 
-        # Vérifier si la requête a réussi
-        if response.status_code == 200:
+        if soup:
 
             headers = {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36",
@@ -38,12 +39,14 @@ def main():
                 "Connection": "keep-alive",
             }
 
-            content = response.text
-            serv_file = content.split("episodes.js?")[1].split("'")[0]
+
+            # content = response.text
+            serv_file = str(soup).split("episodes.js?")[1].split('"')[0]
 
             url_ru = Yui.construct(url_anime_orrigin, serv_file)
-            # print(url_ru)
-            reponse = requests.get(url_ru)
+            print(url_ru)
+            
+            reponse = await Yui.request(url_ru)
             # retaper la manière dont les url son récupérer avec pour ojbectif de aire en sorte que cela fonctione a tous les coup peut importe sa position au moment du get sur les lien sib
             
             url_episodes = reponse.text
@@ -70,10 +73,10 @@ def main():
                 Cardinal.last_requets(Yui.final_construct(video_id, ID), i, Yui.animes_search(url_anime_orrigin), Yui.saisons_search(url_anime_orrigin), ID)
 
         else:
-            print(f"Erreur lors de la requête : {response.status_code}")
+            print(f"Erreur lors de la requête...")
         
     except KeyboardInterrupt:
         print(languages[lang]["keyboard_interupt"])
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
