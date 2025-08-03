@@ -1,5 +1,5 @@
 from function.__init__ import *
-import requests
+import requests # type: ignore
 import json
 import re
 import asyncio
