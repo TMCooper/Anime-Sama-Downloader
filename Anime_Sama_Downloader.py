@@ -44,7 +44,7 @@ async def main():
             serv_file = str(soup).split("episodes.js?")[1].split('"')[0]
 
             url_ru = Yui.construct(url_anime_orrigin, serv_file)
-            print(url_ru)
+            # print(url_ru)
             
             reponse = await Yui.request(url_ru)
             # retaper la manière dont les url son récupérer avec pour ojbectif de aire en sorte que cela fonctione a tous les coup peut importe sa position au moment du get sur les lien sib
@@ -60,7 +60,7 @@ async def main():
             for url_episode in url_episodes:
                 if not "videoid=" in url_episode:
                     continue
-                print(f'url_episode {i} : {url_episode}')
+                # print(f'url_episode {i} : {url_episode}')
                 i += 1
                 ID = url_episode.split("videoid=")[1]
                 # print(ID)
