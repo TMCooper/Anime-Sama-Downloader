@@ -11,7 +11,7 @@
 - Currently the downloader is patched, in fact errors have been noted by the irregularity of the site the line concerned has therefore been corrected and some tests have been carried out in order to validate it
 
 ## Warning
-- If you see a message like : ```Looks like Playwright was just installed or updated. Please run the following command to download new browsers: playwright install <3 Playwright Team``` just do : 
+- If you see a message like : ```Looks like Playwright was just installed or updated. Please run the following command to download new browsers: playwright install <3 Playwright Team``` just do (in the env) : 
 ```bash
 playwright install
 ```
