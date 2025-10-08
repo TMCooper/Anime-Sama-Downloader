@@ -7,10 +7,10 @@
 - And then you click on the saison you want take the link and give them to the downloader
 
 ## Update
+- Now the downloader is aproximatly x2 or x3 more faster thant the previouse version (aproximatly 30 mn fort 12 episode i gess i m not sure about this stats but we are surly close)
 - Currently the downloader is patched, in fact errors have been noted by the irregularity of the site the line concerned has therefore been corrected and some tests have been carried out in order to validate it
 
 ## Warning
-- The downloader can be very slow it don't depend on the program it depends on the server
 - If you see a message like : ```Looks like Playwright was just installed or updated. Please run the following command to download new browsers: playwright install <3 Playwright Team``` just do : 
 ```bash
 playwright install
@@ -18,5 +18,5 @@ playwright install
 and all is normaly good you can use the software !
 
 ## Demo
-
+## Currently not exact the same but it's the same simply put your link and wait
 <img src="./docs/demo.gif" width="100%" align="center">
