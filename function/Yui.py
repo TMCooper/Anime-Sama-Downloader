@@ -1,6 +1,8 @@
 import os
 import re
-import asyncio
+# import asyncio
+import shutil
+import tempfile
 from playwright.async_api import async_playwright
 
 
@@ -40,18 +42,46 @@ class Yui:
     
     @staticmethod
     async def create_browser_context(user_data_path, channel):
-        """Crée et retourne un contexte de navigateur persistant"""
+        """Crée et retourne un contexte de navigateur avec profil temporaire"""
         p = async_playwright()
         playwright_instance = await p.start()
         
-        context = await playwright_instance.chromium.launch_persistent_context(
-            user_data_dir=user_data_path,
-            headless=True,
-            channel=channel,
-            args=['--disable-blink-features=AutomationControlled']
-        )
+        # Créer un dossier temporaire pour le profil
+        temp_profile = tempfile.mkdtemp(prefix="playwright_profile_")
         
-        return playwright_instance, context
+        try:
+            # Copier seulement les fichiers essentiels (cookies, etc.)
+            default_profile = os.path.join(user_data_path, 'Default')
+            temp_default = os.path.join(temp_profile, 'Default')
+            os.makedirs(temp_default, exist_ok=True)
+            
+            # Copier les cookies si le fichier existe
+            cookies_file = os.path.join(default_profile, 'Cookies')
+            if os.path.exists(cookies_file):
+                try:
+                    shutil.copy2(cookies_file, os.path.join(temp_default, 'Cookies'))
+                    print("Cookies copiés avec succès")
+                except Exception as e:
+                    print(f"Impossible de copier les cookies: {e}")
+            
+            # Lancer avec le profil temporaire
+            context = await playwright_instance.chromium.launch_persistent_context(
+                user_data_dir=temp_profile,
+                headless=True,
+                channel=channel,
+                args=[
+                    '--disable-blink-features=AutomationControlled',
+                    '--no-sandbox',
+                    '--disable-dev-shm-usage'
+                ]
+            )
+            
+            return playwright_instance, context
+            
+        except Exception as e:
+            # Nettoyer en cas d'erreur
+            shutil.rmtree(temp_profile, ignore_errors=True)
+            raise e
     
     @staticmethod
     async def get_anime_info(page, url):
