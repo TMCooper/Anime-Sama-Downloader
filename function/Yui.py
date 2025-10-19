@@ -1,6 +1,5 @@
 import os
 import re
-# import asyncio
 import shutil
 import tempfile
 from playwright.async_api import async_playwright
