@@ -36,7 +36,7 @@ async def main():
                 channel=browser_channel,
                 args=[
                     '--disable-blink-features=AutomationControlled',
-                    '--disable-web-security',
+                    # '--disable-web-security',
                     '--disable-features=IsolateOrigins,site-per-process'
                 ]
             )
