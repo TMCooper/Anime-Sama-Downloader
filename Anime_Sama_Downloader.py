@@ -8,10 +8,8 @@ async def main():
     # Vérifie si le navigateur est installé, sinon l'installe
     playwright_dir = os.path.join(os.path.expanduser("~"), "AppData", "Local", "ms-playwright")
     if not os.path.exists(os.path.join(playwright_dir, "chromium-")):
-        # print("Téléchargement de Chromium pour Playwright...")
         subprocess.run(["playwright", "install", "chromium"], check=True)
 
-    """Point d'entrée principal du programme de téléchargement"""
     print("Démarrage du script de téléchargement de saison...\n")
     
     browser_user_data_path, browser_channel = Yui.find_browser_profile()
@@ -73,9 +71,8 @@ async def main():
             # --- Capture de l'épisode initial ---
             print(f"\nPhase 0 : Capture de l'épisode initialement chargé...")
             try:
-                # Identifier l'épisode déjà sélectionné sur la page
                 initial_episode_text = await page.evaluate("document.querySelector('#selectEpisodes').value")
-                print(f"  → Page chargée sur : '{initial_episode_text}'. Attente de son M3U8...")
+                print(f"Page chargée sur : '{initial_episode_text}'. Attente de son M3U8...")
                 
                 new_m3u8_event.clear()
                 await asyncio.wait_for(new_m3u8_event.wait(), timeout=30)
@@ -88,37 +85,43 @@ async def main():
                     print(f"M3U8 pour l'épisode initial non détecté à temps.")
 
             except asyncio.TimeoutError:
-                print(f"Timeout : Le M3U8 de l'épisode initial n'a pas été capturé. La boucle principale tentera de le récupérer.")
+                print(f"Timeout : Le M3U8 de l'épisode initial n'a pas été capturé.")
             except Exception as e:
                 print(f"Erreur lors de la capture initiale : {e}")
 
-
-            print(f"\nPhase 1 : Collecte des données M3U8 pour les autres épisodes...")
+            print(f"\nPhase 1 : Collecte des données M3U8 pour les autres épisodes...\n")
             
             try:
                 for episode in episodes_to_download:
                     ep_num, ep_text = episode["number"], episode["text"]
                     
-                    # Si on l'a déjà capturé (en phase 0 ou dans une exécution précédente de la boucle), on passe.
                     if ep_text in m3u8_by_episode:
-                        print(f" {ep_text} déjà capturé, passage au suivant")
+                        print(f"{ep_text} déjà capturé, passage au suivant")
                         continue
                     
-                    print(f"\n--- Traitement de la collecte pour : {ep_text} ---")
+                    print(f"--- Collecte : {ep_text} ---")
                     
                     success = False
                     MAX_RETRIES = 3
                     for attempt in range(1, MAX_RETRIES + 1):
                         if attempt > 1:
-                            print(f"Tentative {attempt}/{MAX_RETRIES} pour {ep_text}...")
+                            print(f"Tentative {attempt}/{MAX_RETRIES}...")
                         
                         new_m3u8_event.clear()
                         
                         try:
-                            # === NAVIGATION PAR CLAVIER ===
+                            # === CLIC PHYSIQUE AVEC COORDONNÉES ===
                             await page.bring_to_front()
-                            await page.click("#selectEpisodes")
-                            await asyncio.sleep(0.4)
+                            
+                            # Obtenir la position du select et cliquer physiquement dessus
+                            select_box = await page.locator("#selectEpisodes").bounding_box()
+                            if select_box:
+                                # Cliquer au centre du select (comme un humain)
+                                await page.mouse.click(
+                                    select_box['x'] + select_box['width'] / 2,
+                                    select_box['y'] + select_box['height'] / 2
+                                )
+                                await asyncio.sleep(0.5)
 
                             current_text = await page.evaluate("document.querySelector('#selectEpisodes').value")
                             all_texts = [ep["text"] for ep in episodes_to_download]
@@ -126,6 +129,7 @@ async def main():
                             target_index = all_texts.index(ep_text)
                             steps = target_index - current_index
 
+                            # Navigation avec les flèches
                             if steps > 0:
                                 for _ in range(steps):
                                     await page.keyboard.press("ArrowDown")
@@ -137,10 +141,10 @@ async def main():
 
                             await asyncio.sleep(2)
 
+                            # Vérifier qu'on est sur le bon épisode
                             selected_episode = await page.evaluate("document.querySelector('#selectEpisodes').value")
                             if selected_episode != ep_text:
-                                # print(f"Navigation clavier échouée : sur '{selected_episode}' au lieu de '{ep_text}'")
-                                # print(f"Fallback JavaScript pour {ep_text}...")
+                                # Fallback JavaScript
                                 await page.evaluate(f"""
                                     const select = document.querySelector('#selectEpisodes');
                                     select.value = '{ep_text}';
@@ -151,45 +155,50 @@ async def main():
                                 selected_episode = await page.evaluate("document.querySelector('#selectEpisodes').value")
 
                             if selected_episode == ep_text:
-                                print(f"Attente du M3U8 pour {ep_text}...")
+                                print(f"Attente du M3U8...")
                                 await asyncio.wait_for(new_m3u8_event.wait(), timeout=30)
                                 if pending_m3u8_data:
                                     m3u8_by_episode[ep_text] = pending_m3u8_data
-                                    print(f"M3U8 de '{ep_text}' stocké (total: {len(m3u8_by_episode)})")
+                                    print(f"M3U8 stocké (total: {len(m3u8_by_episode)})")
                                     pending_m3u8_data = None
                                     success = True
                                     break 
                             else:
-                                print(f"Impossible de sélectionner {ep_text} (toujours sur '{selected_episode}')")
+                                print(f"Impossible de sélectionner {ep_text}")
+                        
                         except asyncio.TimeoutError:
-                            print(f"Timeout lors de la capture M3U8 pour {ep_text}.")
+                            print(f"Timeout M3U8 pour {ep_text}")
+                            if attempt < MAX_RETRIES:
+                                await asyncio.sleep(2)
 
                     if not success:
-                        print(f"ERREUR CRITIQUE : Impossible de capturer {ep_text} après {MAX_RETRIES} tentatives")
-                        Cardinal.log_error(anime_title, season_number, ep_num, f"Échec de la capture M3U8 après {MAX_RETRIES} tentatives")
+                        print(f"ÉCHEC après {MAX_RETRIES} tentatives pour {ep_text}")
+                        Cardinal.log_error(anime_title, season_number, ep_num, f"Échec M3U8 après {MAX_RETRIES} tentatives")
 
             except asyncio.TimeoutError:
                 print("Timeout général atteint.")
             finally:
                 page.remove_listener("request", intercept_request)
 
-            print(f"\nCollecte terminée. {len(m3u8_by_episode)} ensembles de données M3U8 uniques trouvés.\n")
+            print(f"\nCollecte terminée : {len(m3u8_by_episode)} M3U8 trouvés.\n")
+            
             if len(m3u8_by_episode) != len(episodes_to_download):
-                print(f"ATTENTION : {len(episodes_to_download)} épisodes détectés vs {len(m3u8_by_episode)} M3U8 collectés !")
+                print(f"ATTENTION : {len(episodes_to_download)} épisodes vs {len(m3u8_by_episode)} M3U8 !")
                 missing = [ep['text'] for ep in episodes_to_download if ep['text'] not in m3u8_by_episode]
                 print(f"Épisodes manquants : {missing}")
-                if input("Voulez-vous continuer quand même ? (o/n) ").lower() != 'o':
+                if input("Continuer quand même ? (o/n) ").lower() != 'o':
                     return
 
             # --- TÉLÉCHARGEMENT ---
-            print(f"Phase 2 : Téléchargement des épisodes...\n")
+            print(f"\nPhase 2 : Téléchargement des épisodes...\n")
             for episode in episodes_to_download:
                 ep_num, ep_text = episode["number"], episode["text"]
                 if ep_text not in m3u8_by_episode:
-                    print(f"Pas de données M3U8 pour {ep_text}. Il est ignoré.")
-                    Cardinal.log_error(anime_title, season_number, ep_num, "Aucune donnée M3U8 collectée")
+                    print(f"Pas de M3U8 pour {ep_text}, ignoré.")
+                    Cardinal.log_error(anime_title, season_number, ep_num, "Aucune donnée M3U8")
                     continue
-                print(f"\n--- Traitement de : {ep_text} ---")
+                
+                print(f"\n--- Téléchargement : {ep_text} ---")
                 try:
                     m3u8_info = m3u8_by_episode[ep_text]
                     await Cardinal.download_and_compile_episode(
@@ -197,15 +206,15 @@ async def main():
                     )
                     Cardinal.cleanscreen()
                 except Exception as e:
-                    print(f"ERREUR pour l'épisode {ep_num}: {e}")
+                    print(f"ERREUR : {e}")
                     Cardinal.log_error(anime_title, season_number, ep_num, str(e))
                     Cardinal.cleanscreen()
 
         except Exception as e:
-            print(f"Une erreur critique est survenue : {e}")
+            print(f"Erreur critique : {e}")
         
         finally:
-            print("\nTravail terminé. Fermeture du navigateur.\n\n")
+            print("\nTravail terminé. Fermeture du navigateur.\n")
             if context:
                 await context.close()
 
