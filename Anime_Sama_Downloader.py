@@ -1,9 +1,16 @@
-import asyncio
+import asyncio, os, subprocess
 from playwright.async_api import async_playwright
 from function.Yui import Yui
 from function.Cardinal import Cardinal
 
 async def main():
+
+    # Vérifie si le navigateur est installé, sinon l'installe
+    playwright_dir = os.path.join(os.path.expanduser("~"), "AppData", "Local", "ms-playwright")
+    if not os.path.exists(os.path.join(playwright_dir, "chromium-")):
+        # print("Téléchargement de Chromium pour Playwright...")
+        subprocess.run(["playwright", "install", "chromium"], check=True)
+
     """Point d'entrée principal du programme de téléchargement"""
     print("Démarrage du script de téléchargement de saison...\n")
     

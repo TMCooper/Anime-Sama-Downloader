@@ -19,4 +19,4 @@ and all is normaly good you can use the software !
 
 ## Demo
 ## Currently not exact the same but it's the same simply put your link and wait
-<img src="./docs/demo.gif" width="100%" align="center">
+<img src="./ressources/docs/demo.gif" width="100%" align="center">
