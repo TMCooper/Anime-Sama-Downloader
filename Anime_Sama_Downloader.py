@@ -1,4 +1,4 @@
-import asyncio, os, subprocess, shutil
+import asyncio, os, subprocess
 from playwright.async_api import async_playwright
 from function.Yui import Yui
 from function.Cardinal import Cardinal
@@ -28,7 +28,6 @@ async def main():
     Cardinal.cleanscreen()
 
     
-    default_profile = os.path.join(browser_user_data_path, "Default")
     custom_profile = os.path.join(playwright_dir, "playwright_profile")
 
     os.makedirs(custom_profile, exist_ok=True)
