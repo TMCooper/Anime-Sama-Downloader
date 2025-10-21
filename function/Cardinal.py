@@ -11,7 +11,7 @@ from datetime import datetime
 class Cardinal:
     """Classe pour le téléchargement et la compilation des épisodes"""
     
-    OUTPUT_DIRECTORY = "dist"
+    OUTPUT_DIRECTORY = "Anime"
     
     @staticmethod
     def log_error(anime_title, season_number, episode_number, error):
