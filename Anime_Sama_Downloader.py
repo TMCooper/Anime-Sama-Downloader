@@ -31,8 +31,7 @@ async def main():
     default_profile = os.path.join(browser_user_data_path, "Default")
     custom_profile = os.path.join(playwright_dir, "playwright_profile")
 
-    if not os.path.exists(custom_profile):
-        shutil.copytree(default_profile, custom_profile)
+    os.makedirs(custom_profile, exist_ok=True)
     
     async with async_playwright() as p:
         context = None
