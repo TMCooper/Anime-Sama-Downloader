@@ -37,7 +37,7 @@ async def main():
         context = None
         try:
             context = await p.chromium.launch_persistent_context(
-                user_data_dir=browser_user_data_path,
+                user_data_dir=custom_profile,
                 headless=True,
                 channel=browser_channel,
                 args=[
