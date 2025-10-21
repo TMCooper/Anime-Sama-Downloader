@@ -1,4 +1,4 @@
-import asyncio, os, subprocess
+import asyncio, os, subprocess, shutil
 from playwright.async_api import async_playwright
 from function.Yui import Yui
 from function.Cardinal import Cardinal
@@ -26,6 +26,13 @@ async def main():
     print(f"Le script va utiliser votre profil {browser_channel.title()}. Fermez toutes ses fenêtres.")
     input("Appuyez sur Entrée lorsque c'est fait...")
     Cardinal.cleanscreen()
+
+    
+    default_profile = os.path.join(browser_user_data_path, "Default")
+    custom_profile = os.path.join(playwright_dir, "playwright_profile")
+
+    if not os.path.exists(custom_profile):
+        shutil.copytree(default_profile, custom_profile)
     
     async with async_playwright() as p:
         context = None
@@ -36,7 +43,7 @@ async def main():
                 channel=browser_channel,
                 args=[
                     '--disable-blink-features=AutomationControlled',
-                    # '--disable-web-security',
+                    '--disable-web-security',
                     '--disable-features=IsolateOrigins,site-per-process'
                 ]
             )
