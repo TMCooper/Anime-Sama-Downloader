@@ -21,5 +21,5 @@ class Cardinal:
     def clearScreen():
         if platform.system() == "Windows":
             os.system("cls")
-        elif platform.system() == ["Linux", "Darwin"]:
+        elif platform.system() in ["Linux", "Darwin"]:
             os.system("clear")
