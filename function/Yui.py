@@ -1,4 +1,4 @@
-import os, yt_dlp
+import os, yt_dlp, random, time
 from yt_dlp.utils import DownloadError
 from function.Cardinal import *
 
@@ -35,13 +35,15 @@ class Yui:
 
             ydl_opts = {
                 "format": "best",                                                   # Qualité vidéo maximale
-                "outtmpl": os.path.join(FINAL_PATH, f"{ep_id}"),                 # Nom du fichier de sortie
+                "outtmpl": os.path.join(FINAL_PATH, f"{ep_id}.mp4"),                # Nom du fichier de sortie
                 "quiet": False,                                                     # Affiche les logs
                 "http_headers": Yui.HEADERS,                                        # Header pour effectuer la requets
             }
 
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
+            
+            time.sleep(random.randint(1, 7)) # Rallentissement du code aleatoire pour evité un ban ip
 
         except DownloadError as e:
             Cardinal.log_error(anime_name, anime_saison, ep_id, e, langue)
