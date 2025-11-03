@@ -2,9 +2,8 @@ import os, subprocess, sys, platform
 
 PATH = os.path.dirname(os.path.abspath(__file__))
 PATH_DOWNLOADER_REQUIREMENTS = os.path.join(PATH, "requirements.txt") # Pointe vers les dependence de l'api
-PATH_API_REQUIREMENTS = os.path.join(PATH, r"AnimeSamaApi\requirements.txt") # Dependence du downloader
 
-def setup_env(env_name="AnimeSamaEnv", requirements_file=PATH_API_REQUIREMENTS):
+def setup_env(env_name="AnimeSamaEnv", requirements_file=PATH_DOWNLOADER_REQUIREMENTS):
     # 1. Vérifier si le dossier d'environnement existe
     if not os.path.exists(env_name):
         print(f"Création de l'environnement virtuel '{env_name}'...")
@@ -24,7 +23,7 @@ def setup_env(env_name="AnimeSamaEnv", requirements_file=PATH_API_REQUIREMENTS):
     if os.path.exists(requirements_file):
         print(f"Installation des dépendances depuis {requirements_file}...")
         # subprocess.run([pip_path, "install", "-r", PATH_DOWNLOADER_REQUIREMENTS], check=True)
-        subprocess.run([pip_path, "install", "-r", PATH_API_REQUIREMENTS], check=True)
+        subprocess.run([pip_path, "install", "-r", PATH_DOWNLOADER_REQUIREMENTS], check=True)
     else:
         print("Aucun fichier requirements.txt trouvé, installation ignorée.")
 
