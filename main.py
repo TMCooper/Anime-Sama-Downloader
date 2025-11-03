@@ -34,6 +34,7 @@ def main():
     log.setLevel(logging.ERROR)  # Ne montre que les erreurs de l'api pour évité une polution inutile du prompte
 
     # Vérification de l'existance du fichier AnimeInfo.json et si il existe pas creation de celui ci 
+    # Le faire après que on sache quel est la langue que l'utilisateur veut utiliser
     os.makedirs(PATH_DIR, exist_ok=True)
     if not os.path.isfile(PATH_ANIME):
         print("Fichier introuvable, récupération des données... Cela peut prendre un certain temps merci de votre patience...")

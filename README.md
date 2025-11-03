@@ -23,6 +23,9 @@ playwright install
 ```
 and all is normaly good you can use the software !
 
+# Contact
+If anyone have some question about this u can open a issues or maybe latter i will create a discord for anyone want some help
+
 ## Demo
-## Currently not exact the same but it's the same simply put your link and wait
+## Currently that not this u need to write what name u want and in second the saison u want and in the third the version for exemple vostfr, vf
 <img src="./ressources/docs/demo.gif" width="100%" align="center">
