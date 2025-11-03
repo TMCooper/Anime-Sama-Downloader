@@ -37,4 +37,4 @@ if __name__ == "__main__":
     if os.name == "nt":
         print(r"Commande pour lancer votre env sous windows : .\AnimeSamaEnv\Scripts\activate")
     else:  # Linux / macOS
-        print(r"Commande pour lancer votre env sous windows : .\AnimeSamaEnv\bin\activate")
+        print(r"Commande pour lancer votre env sous linux : source ./AnimeSamaEnv/bin/activate")
