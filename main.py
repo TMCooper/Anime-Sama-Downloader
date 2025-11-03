@@ -19,7 +19,7 @@ from function.Yui import *
 
 PATH = os.getcwd()
 PATH_DOWNLOAD = os.path.join(PATH, "Anime")
-PATH_LANGUAGE = os.path.join(PATH, r"ressources\languages\languages.json")
+PATH_LANGUAGE = os.path.join(PATH, "ressources", "languages", "languages.json")
 os.makedirs(PATH_DOWNLOAD, exist_ok=True)
 
 def launchApi():
@@ -75,19 +75,19 @@ def main():
                 anime_saison = anime_data["Saison"].strip().replace(" ", "").lower()
 
                 all_episodes = requests.get(f"http://127.0.0.1:5000/api/getAnimeLink?n={choixAnime}&s={saison}&v={version}").json()
+                # print(all_episodes)
                 break
 
         if not version:
             version = "vostfr"
-            print("vostfr")
+            # print(version)
         else:
             version = version.replace(" ", "").strip().lower()
 
         if all_episodes:
 
-            
-            print(anime_name)
-            print(anime_saison)
+            # print(anime_name)
+            # print(anime_saison)
             
             for eps in all_episodes:
                 ep_num = eps["episode"]
