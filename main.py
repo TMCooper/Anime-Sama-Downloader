@@ -23,7 +23,7 @@ PATH_LANGUAGE = os.path.join(PATH, "ressources", "languages", "languages.json")
 os.makedirs(PATH_DOWNLOAD, exist_ok=True)
 
 def launchApi():
-    Thread(target=Api.launch, kwargs={"debug_state": False, "reload_status": False}, daemon=True).start()
+    Thread(target=Api.launch, kwargs={"port": 5000,"debug_state": False, "reload_status": False}, daemon=True).start()
     print("API launched successfully (running in background)")
 
 def main():
