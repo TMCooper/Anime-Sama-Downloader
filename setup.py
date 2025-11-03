@@ -16,7 +16,7 @@ def setup_env(env_name="AnimeSamaEnv", requirements_file=PATH_API_REQUIREMENTS):
     if platform.system() == "Windows":  # Windows
         pip_path = os.path.join(env_name, "Scripts", "pip.exe")
         python_path = os.path.join(env_name, "Scripts", "python.exe")
-    elif platform.system() == ["Linux", "Darwin"]:  # Linux / macOS
+    elif platform.system() in ["Linux", "Darwin"]:  # Linux / macOS
         pip_path = os.path.join(env_name, "bin", "pip")
         python_path = os.path.join(env_name, "bin", "python3")
 
