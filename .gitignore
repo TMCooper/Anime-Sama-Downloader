@@ -9,3 +9,7 @@ anime_sama_test
 build
 SamaDownload.exe
 Anime
+exe
+AnimeSamaEnv
+test_yt.py
+logs

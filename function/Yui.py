@@ -1,50 +1,47 @@
-import os
-import re
+import os, yt_dlp
+from yt_dlp.utils import DownloadError
+from function.Cardinal import *
 
 class Yui:
-    """Classe pour la gestion du navigateur et de l'interception des flux M3U8"""
     
-    @staticmethod
-    def find_browser_profile():
-        home_dir = os.path.expanduser('~')
-        edge_path = os.path.join(home_dir, 'AppData', 'Local', 'Microsoft', 'Edge', 'User Data')
-        chrome_path = os.path.join(home_dir, 'AppData', 'Local', 'Google', 'Chrome', 'User Data')
-        if os.path.exists(edge_path):
-            print("Profil Microsoft Edge détecté.")
-            return edge_path, "msedge"
-        elif os.path.exists(chrome_path):
-            print("Profil Google Chrome détecté.")
-            return chrome_path, "chrome"
-        return None, None
-    
-    @staticmethod
-    def extract_season_from_url(url):
-        match = re.search(r'saison(\d+)', url, re.IGNORECASE)
-        if match: return int(match.group(1))
-        print("Saison non détectée, utilisation de 'Saison 01' par défaut.")
-        return 1
-    
-    @staticmethod
-    def sanitize_filename(name):
-        return re.sub(r'[\\/*?:"<>|]', "", name).strip()
+    HEADERS = {
+        'authority': 'p16-ad-sg.tiktokcdn.com',
+        'method': 'GET',
+        'path': '/obj/ad-site-i18n-sg/202508125d0d6bceedbe1123419c9459',
+        'scheme': 'https',
+        'accept': '*/*',
+        'accept-encoding': 'gzip, deflate, br, zstd',
+        'accept-language': 'fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7,ja;q=0.6,de;q=0.5,zh-CN;q=0.4,zh;q=0.3,ru;q=0.2,es;q=0.1,ko;q=0.1,vi;q=0.1,pl;q=0.1',
+        'cache-control': 'no-cache',
+        'origin': 'https://smoothpre.com',
+        'pragma': 'no-cache',
+        'priority': 'u=1, i',
+        'referer': 'https://smoothpre.com/',
+        'sec-ch-ua': '"Not)A;Brand";v="8", "Chromium";v="138", "Opera GX";v="122"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Windows"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'cross-site',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0',
+        }
 
-    @staticmethod
-    async def get_anime_info(page, url):
-        """Récupère les informations de l'anime et la liste des épisodes."""
-        print(f"Navigation vers la page initiale : {url}")
-        await page.goto(url, wait_until="domcontentloaded", timeout=60000)
-        anime_title_raw = await page.locator("#titreOeuvre").inner_text()
-        anime_title = Yui.sanitize_filename(anime_title_raw).lower()
-        season_number = Yui.extract_season_from_url(url)
-        print(f"Anime détecté : {anime_title} | Saison {season_number:02d}")
+    def download(url, PATH_DOWNLOAD, anime_name, anime_saison, version, ep_id, langue):
         
-        episode_options = await page.locator("#selectEpisodes > option").all()
-        episodes_to_download = []
-        for option in episode_options:
-            text = await option.inner_text()
-            value = await option.get_attribute("value")
-            match = re.search(r'\d+', text)
-            if match:
-                episodes_to_download.append({"number": int(match.group(0)), "text": text, "value": value})
-        print(f"{len(episodes_to_download)} épisodes trouvés.")
-        return anime_title, season_number, episodes_to_download
+        FINAL_PATH = os.path.join(PATH_DOWNLOAD, anime_name, version, anime_saison)
+
+        try:
+            os.makedirs(FINAL_PATH, exist_ok=True)
+
+            ydl_opts = {
+                "format": "best",                                                   # Qualité vidéo maximale
+                "outtmpl": os.path.join(FINAL_PATH, f"{ep_id}"),                 # Nom du fichier de sortie
+                "quiet": False,                                                     # Affiche les logs
+                "http_headers": Yui.HEADERS,                                        # Header pour effectuer la requets
+            }
+
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([url])
+
+        except DownloadError as e:
+            Cardinal.log_error(anime_name, anime_saison, ep_id, e, langue)
