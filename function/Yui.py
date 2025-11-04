@@ -43,7 +43,7 @@ class Yui:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
             
-            time.sleep(random.randint(1, 7)) # Rallentissement du code aleatoire pour evité un ban ip
+            time.sleep(random.randint(3, 7)) # Rallentissement du code aleatoire pour evité un ban ip
 
         except DownloadError as e:
             Cardinal.log_error(anime_name, anime_saison, ep_id, e, langue)
