@@ -30,7 +30,7 @@ class Yui:
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0',
         }
 
-    def download(url, PATH_DOWNLOAD, anime_name, anime_saison, version, ep_id, languages, langue):
+    def download(url, PATH_DOWNLOAD, anime_name, anime_saison, version, ep_id, current_ep, languages, langue):
         
         FINAL_PATH = os.path.join(PATH_DOWNLOAD, anime_name, version, anime_saison)
 
@@ -50,8 +50,9 @@ class Yui:
             time.sleep(random.randint(3, 7)) # Rallentissement du code aleatoire pour evité un ban ip
             Cardinal.clearScreen()
 
-        except DownloadError as e:
-            Cardinal.log_error(anime_name, anime_saison, ep_id, e, languages, langue)
+        except DownloadError and KeyboardInterrupt as e:
+            Cardinal.log_error(anime_name, anime_saison, current_ep, e, languages, langue)
+            exit()
 
     def getLanguageFile():
         URL = "https://raw.githubusercontent.com/TMCooper/Anime-Sama-Downloader/refs/heads/main/ressources/languages/languages.json"
