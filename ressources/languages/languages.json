@@ -1,14 +1,20 @@
 {
-    "fr" : {
-        "Exit_q" : "Pour quiter le programme tapper Q",
-        "Requests_user_link" : "Entrez le lien de l'animer : ",
-        "keyboard_interupt" : "\nL utilisateur a saisit CTRL + C arret du programme ...",
-        "url_question" : "Quel est le lien de l'animer que vous souhaiter telechargee ? : "
+    "fr": {
+        "fileNotFound": "Fichier introuvable, récupération des données... Cela peut prendre un certain temps merci de votre patience...",
+        "errorRequets" : "Erreur lors de la requête : {erreur}",
+        "animeName" : "Quel est le nom de votre animer ? : ",
+        "forcedNameAnime" : "Velliez écrire le nom de votre anime : ",
+        "season" : "Quel saison voulez vous ? (exemple Saison 1, Film, oav) (Par défaut c'est la saison 1 qui est prise) : ",
+        "version" : "Quel version voulez vous ? (exemple vostfr, vf) (Par défaut c'est le vostfr qui est pris) : ",
+        "cardinalLogs" : "[{timestamp}] Échec pour {anime_title} - S{season_number}E{episode_number}: {error}\n"
     },
-    "en" : {
-        "Exit_q": "To exit the program type Q",
-        "Requests_user_link": "Enter the video link : ",
-        "keyboard_interupt": "\nThe user pressed CTRL + C, stopping the program...",
-        "url_question": "What is the link to the animation you would like to download ? : "
+    "eng": {
+        "fileNotFound": "File not found, recovering data... This may take some time, thank you for your patience...",
+        "errorRequets": "Error during query: {erreur}",
+        "animeName": "What is the name of your anime?: ",
+        "forcedNameAnime": "Please write the name of your anime: ",
+        "season" : "Which season do you want? (example Season 1, Movie, OVA) (By default, season 1 is selected):",
+        "version": "Which version do you want? (example vostfr, vf) (By default, vostfr is selected): ",
+        "cardinalLogs": "[{timestamp}] Failed for {anime_title} - S{season_number}E{episode_number}: {error}\n"
     }
 }
