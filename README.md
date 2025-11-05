@@ -25,6 +25,8 @@ playwright install
 ```
 and all is normaly good you can use the software !
 
+### If u download to much anime in a short periode of time u can be temp ban so i I recommend a maximum of 2 animated sessions per hour approximately.
+
 # Contact
 If anyone have some question about this u can open a issues or maybe latter i will create a discord for anyone want some help
 
