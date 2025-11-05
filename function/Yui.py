@@ -1,9 +1,13 @@
-import os, yt_dlp, random, time
+import os, yt_dlp, random, time, requests
 from yt_dlp.utils import DownloadError
 from function.Cardinal import *
 
 class Yui:
-    
+
+    PATH = os.getcwd()
+    PATH_LANGUAGE_FOLDER = os.path.join(PATH, "ressources", "languages")
+    PATH_LANGUAGE = os.path.join(PATH_LANGUAGE_FOLDER, "languages.json")
+
     HEADERS = {
         'authority': 'p16-ad-sg.tiktokcdn.com',
         'method': 'GET',
@@ -26,7 +30,7 @@ class Yui:
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0',
         }
 
-    def download(url, PATH_DOWNLOAD, anime_name, anime_saison, version, ep_id, langue):
+    def download(url, PATH_DOWNLOAD, anime_name, anime_saison, version, ep_id, languages, langue):
         
         FINAL_PATH = os.path.join(PATH_DOWNLOAD, anime_name, version, anime_saison)
 
@@ -44,6 +48,14 @@ class Yui:
                 ydl.download([url])
             
             time.sleep(random.randint(3, 7)) # Rallentissement du code aleatoire pour evité un ban ip
+            Cardinal.clearScreen()
 
         except DownloadError as e:
-            Cardinal.log_error(anime_name, anime_saison, ep_id, e, langue)
+            Cardinal.log_error(anime_name, anime_saison, ep_id, e, languages, langue)
+
+    def getLanguageFile():
+        URL = "https://raw.githubusercontent.com/TMCooper/Anime-Sama-Downloader/refs/heads/main/ressources/languages/languages.json"
+
+        reponse = requests.get(URL).json()
+        # print(reponse)
+        Cardinal.creationLanguagesFile(reponse)
