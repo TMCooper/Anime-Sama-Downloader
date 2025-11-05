@@ -58,4 +58,8 @@ class Yui:
 
         reponse = requests.get(URL).json()
         # print(reponse)
-        Cardinal.creationLanguagesFile(reponse)
+
+        os.makedirs(Yui.PATH_LANGUAGE_FOLDER, exist_ok=True)
+        time.sleep(0.003)
+        with open(Yui.PATH_LANGUAGE, "w", encoding="utf-8") as f:
+            json.dump(reponse, f, indent=4, ensure_ascii=False)
