@@ -1,37 +1,64 @@
 # Anime-Sama-Downloader
 
-## How to use (Currently not the instruction is not update i will do it soon)
-- If you want to use the downloader is very simple you need to go at [Anime Sama](https://anime-sama.org)
-- Then sreach the anime you want to download for exemple [Frieren](https://anime-sama.org/catalogue/frieren/)
-- After click on the saison you want to download (here it one beacause Frieren as no Saison 2 currently) so [Frieren Saison 1](https://anime-sama.org/catalogue/frieren/saison1/vostfr/)
-- And then you click on the saison you want take the link and give them to the downloader
+A fast and efficient downloader for anime from Anime-Sama.
 
-## How pull the repo
-simply do this command 
+## Installation
+
+1. Clone the repository with submodules:
 ```bash
 git clone https://github.com/TMCooper/Anime-Sama-Downloader.git --recurse-submodules
 ```
-## Idea
-- If you have an idea and you want to share me you can normaly do that [here](https://github.com/TMCooper/Anime-Sama-Downloader/discussions/categories/ideas)
 
-## Update
+2. Run the setup:
+```bash
+python setup.py
+```
 
-- Rework of the project and new approche with an api [AnimeSamaApi](https://github.com/TMCooper/AnimeSamaApi/)
+3. Launch the application:
+```bash
+python main.py
+```
 
-- Now the downloader is aproximatly x2 or x3 more faster thant the previouse version (aproximatly 30 mn fort 12 episode i gess i m not sure about this stats but we are surly close)
+### Playwright Installation
+If you see this message after installation:
+```
+Looks like Playwright was just installed or updated.
+Please run the following command to download new browsers:
+playwright install
+```
 
-## Warning
-- If you see a message like : ```Looks like Playwright was just installed or updated. Please run the following command to download new browsers: playwright install <3 Playwright Team``` just do (in the env) : 
+Simply run (in your virtual environment):
 ```bash
 playwright install
 ```
-and all is normaly good you can use the software !
 
-### If u download to much anime in a short periode of time u can be temp ban so i I recommend a maximum of 2 animated sessions per hour approximately.
+## Usage
 
-# Contact
-If anyone have some question about this u can open a issues or maybe latter i will create a discord for anyone want some help
+1. Verify your anime exists on [Anime-Sama](https://anime-sama.org)
+2. Launch `main.py`
+3. Enter the anime name (e.g., "Frieren")
+4. Enter the season number (leave empty for Season 1)
+   - Note: Seasons can include films or OAVs (so for a films the syntax will be ``film`` and oavs it's ``oav`` but again verify if it's exists)
+5. Choose the version: `vostfr` (subbed) or `vf` (dubbed)
 
-## Demo
-## Currently that not this u need to write what name u want and in second the saison u want and in the third the version for exemple vostfr, vf
-<img src="./ressources/docs/demo.gif" width="100%" align="center">
+The downloader will automatically process your request and stop when complete.
+
+## Important Warning
+
+**Rate Limiting**: Downloading too many anime in a short period may result in a temporary ban.
+
+**Recommended**: Maximum of 2 anime downloads per hour.
+
+## Recent Updates
+
+- Complete project rework using a new API: [AnimeSamaApi](https://github.com/TMCooper/AnimeSamaApi/)
+- Performance improvement: 2-3x faster than previous version
+- Estimated download time: ~30 minutes for 12 episodes
+
+## Contributing
+
+Have an idea ? Share it in our [Ideas Discussion](https://github.com/TMCooper/Anime-Sama-Downloader/discussions/categories/ideas)!
+
+## Demo (currently not same update soon)
+
+<img src="./ressources/docs/demo.gif" width="100%" align="center" alt="Anime-Sama-Downloader Demo">
