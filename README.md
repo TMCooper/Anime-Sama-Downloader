@@ -11,6 +11,8 @@ simply do this command
 ```bash
 git clone https://github.com/TMCooper/Anime-Sama-Downloader.git --recurse-submodules
 ```
+## Idea
+- If you have an idea and you want to share me you can normaly do that [here](https://github.com/TMCooper/Anime-Sama-Downloader/discussions/categories/ideas)
 
 ## Update
 
