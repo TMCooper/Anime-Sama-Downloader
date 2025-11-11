@@ -14,7 +14,7 @@ git clone https://github.com/TMCooper/Anime-Sama-Downloader.git --recurse-submod
 python setup.py
 ```
 
-3. Launch the application:
+3. Launch the application (after entering the environment):
 ```bash
 python main.py
 ```
