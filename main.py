@@ -97,12 +97,12 @@ def main():
         time.sleep(0.5)
         # Cardinal.clearScreen() # A rajouté plus tard ?
     
-    # except TypeError:
-    #     print(languages[langue]["BadInformation"].format(choixAnime=choixAnime.replace("%20", " "), saison=saison, version=version))
+    except TypeError:
+        print(languages[langue]["BadInformation"].format(choixAnime=choixAnime.replace("%20", " "), saison=saison, version=version))
 
-    # except Exception as e: # Gestion des erreur tty lier au InquirerPy
-    #     print(languages[langue]["ErrorException"].format(e=e))
-    #     pass
+    except Exception as e: # Gestion des erreur tty lier au InquirerPy
+        print(languages[langue]["ErrorException"].format(e=e))
+        pass
 
 if __name__ == "__main__":
     main()
