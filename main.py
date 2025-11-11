@@ -1,5 +1,6 @@
 # TODO
 # Intégration du system de langue et peut être gerer plus d'erreur typiquement quand on tape mal le nom y a une erreur
+# System de preselection (demander a antoine) avec les fleche pour rendre le tous encore plus simple et efficiant (limite encore plus la marge d'erreur potentiel a une somme proche de 0% ?)
 
 import time, os, requests, logging
 from threading import Thread
@@ -49,8 +50,17 @@ def main():
 
 
         choixAnime = input(languages[langue]["animeName"]).replace(" ", "%20") # le .replace Renplace les espace par des %20
-        saison = input(languages[langue]["season"]).strip().lower().replace(" ", "")
-        version = input(languages[langue]["version"]).strip().lower()
+        saison = Cardinal.ask(languages[langue]["typeAsk"], Cardinal.SAISON_OPTIONS) # Ancienne ligne # saison = input(languages[langue]["season"]).strip().lower().replace(" ", "") 
+
+        if saison == "saison":
+            saison_num = str(input(languages[langue]["season"]))
+            if not saison_num:
+                saison = saison + "1"
+            else:
+                saison = saison + saison_num
+
+        # print(saison)
+        version = Cardinal.ask(languages[langue]["version"], Cardinal.VERSION_OPTIONS) # Ancienne ligne # version = input(languages[langue]["version"]).strip().lower()
 
         # print(f"Anime request : {choixAnime}, saison : {saison}, version : {version}") # Dédier au debug dans le cas ou saison et version n'affiche rien il valent la valeur que l'api leur donne donc saison1 et vostfr 
 
@@ -65,12 +75,6 @@ def main():
                 all_episodes = requests.get(f"http://127.0.0.1:5000/api/getAnimeLink?n={choixAnime}&s={saison}&v={version}").json()
                 # print(all_episodes)
                 break
-
-        if not version:
-            version = "vostfr"
-            # print(version)
-        else:
-            version = version.replace(" ", "").strip().lower()
 
         if all_episodes:
 
@@ -92,6 +96,13 @@ def main():
         print("\nShutdown...")
         time.sleep(0.5)
         # Cardinal.clearScreen() # A rajouté plus tard ?
+    
+    # except TypeError:
+    #     print(languages[langue]["BadInformation"].format(choixAnime=choixAnime.replace("%20", " "), saison=saison, version=version))
+
+    # except Exception as e: # Gestion des erreur tty lier au InquirerPy
+    #     print(languages[langue]["ErrorException"].format(e=e))
+    #     pass
 
 if __name__ == "__main__":
     main()
