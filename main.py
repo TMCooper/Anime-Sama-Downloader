@@ -11,7 +11,7 @@ from function.Cardinal import *
 
 PATH_DOWNLOAD = os.path.join(Yui.PATH, "Anime")
 os.makedirs(PATH_DOWNLOAD, exist_ok=True)
-VALIDE_LANGUAGE = "[FR, ENG]"
+VALIDE_LANGUAGE = ["FR", "ENG"]
 
 def launchApi():
     Thread(target=Api.launch, kwargs={"port": 5000,"debug_state": False, "reload_status": False}, daemon=True).start()
@@ -28,7 +28,8 @@ def main():
         if not os.path.isfile(Yui.PATH_LANGUAGE):
             Yui.getLanguageFile()
 
-        langue = input(f"What is your language {VALIDE_LANGUAGE} : ").lower().strip()
+        langue = Cardinal.ask("What is your language", VALIDE_LANGUAGE).lower() # Ancienne ligne # langue = input(f"What is your language {VALIDE_LANGUAGE} : ").lower().strip()
+        
         while True:
             if langue in ["fr", "eng"]:
                 languages = Cardinal.getLanguages(Yui.PATH_LANGUAGE)
