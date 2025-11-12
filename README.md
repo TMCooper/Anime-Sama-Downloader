@@ -57,9 +57,9 @@ The downloader will automatically process your request and stop when complete.
 
 ## Recent Updates
 
+- Added argument system: debug, IP (-i), Port (-p)
 - Complete project rework using a new API: [AnimeSamaApi](https://github.com/TMCooper/AnimeSamaApi/)
 - Performance improvement: 2-3x faster than previous version
-- Estimated download time: ~30 minutes for 12 episodes
 
 ## Contributing
 
