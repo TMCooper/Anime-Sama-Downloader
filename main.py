@@ -1,8 +1,8 @@
 # TODO
 # Intégration du system de langue et peut être gerer plus d'erreur typiquement quand on tape mal le nom y a une erreur
-# System de preselection (demander a antoine) avec les fleche pour rendre le tous encore plus simple et efficiant (limite encore plus la marge d'erreur potentiel a une somme proche de 0% ?)
+# System d'arguments pour un mode debug
 
-import time, os, requests, logging
+import time, os, requests, logging, argparse
 from threading import Thread
 from AnimeSamaApi.main import Api
 from AnimeSamaApi.src.backend import PATH_DIR, PATH_ANIME # Pour verifier si le fichier AnimeInfo.json est bien la
@@ -13,14 +13,28 @@ PATH_DOWNLOAD = os.path.join(Yui.PATH, "Anime")
 os.makedirs(PATH_DOWNLOAD, exist_ok=True)
 VALIDE_LANGUAGE = ["FR", "ENG"]
 
-def launchApi():
-    Thread(target=Api.launch, kwargs={"port": 5000,"debug_state": False, "reload_status": False}, daemon=True).start()
+def launchApi(port = 5000, ip="127.0.0.1"):
+    Thread(target=Api.launch, kwargs={"port": port, "ip": ip,"debug_state": False, "reload_status": False}, daemon=True).start()
     # print("API launched successfully (running in background)")
 
 def main():
-    launchApi()
+    parser = argparse.ArgumentParser(
+        description="Exemple de script avec arguments et options."
+    )
+
+    parser.add_argument("--debug", action="store_true", help="Active le mode débogage")
+    parser.add_argument("--ip", type=str,  help="Adresse IP souhaitée")
+    parser.add_argument("-p", "--port", type=int, help="Port souhaité")
+    
+    args = parser.parse_args()
+    
+    launchApi(port=args.port, ip=args.ip)
+    port = args.port or 5000 # Si port est = None ou 0 alors il prendra la valeur de 5000
+    ip = args.ip or "127.0.0.1" # Si ip est = None ou 0 alors elle prendra la valeur 127.0.0.1 
+    
     time.sleep(0.003)
     Cardinal.clearScreen()
+
     log = logging.getLogger('werkzeug')
     log.setLevel(logging.ERROR)  # Ne montre que les erreurs de l'api pour évité une polution inutile du prompt
     
@@ -30,25 +44,18 @@ def main():
 
         langue = Cardinal.ask("What is your language", VALIDE_LANGUAGE).lower() # Ancienne ligne # langue = input(f"What is your language {VALIDE_LANGUAGE} : ").lower().strip()
         
-        while True:
-            if langue in ["fr", "eng"]:
-                languages = Cardinal.getLanguages(Yui.PATH_LANGUAGE)
-                break
-            else:
-                langue = input(f"Please select one of the actual list {VALIDE_LANGUAGE} : ")
+        languages = Cardinal.getLanguages(Yui.PATH_LANGUAGE)
 
-        # Ne pas oublier d'implementé la fonction de lecture du fichier languages.json
-        # Vérification de l'existance du fichier AnimeInfo.json et si il existe pas creation de celui ci 
+        # Vérification de l'existance du fichier AnimeInfo.json et si il existe pas recuperation de celui ci 
         os.makedirs(PATH_DIR, exist_ok=True)
         if not os.path.isfile(PATH_ANIME):
             print(languages[langue]["fileNotFound"])
             try:
-                requests.get("http://127.0.0.1:5000/api/getAllAnime?r=True")
+                    requests.get(f"http://{ip}:{port}/api/getAllAnime?r=True")
             except Exception as e:
                 print(languages[langue]["errorRequets"].format(erreur=e))
                 exit()
         Cardinal.clearScreen()
-
 
         choixAnime = input(languages[langue]["animeName"]).replace(" ", "%20") # le .replace Renplace les espace par des %20
         saison = Cardinal.ask(languages[langue]["typeAsk"], Cardinal.SAISON_OPTIONS) # Ancienne ligne # saison = input(languages[langue]["season"]).strip().lower().replace(" ", "") 
@@ -69,11 +76,11 @@ def main():
             if not choixAnime:
                 choixAnime = input(languages[langue]["forcedNameAnime"])
             else:
-                anime_data = requests.get(f"http://127.0.0.1:5000/api/getSpecificAnime?q={choixAnime}&s={saison}").json()
+                anime_data = requests.get(f"http://{ip}:{port}/api/getSpecificAnime?q={choixAnime}&s={saison}").json()
                 anime_name = anime_data["title"]
                 anime_saison = anime_data["Saison"].strip().replace(" ", "").lower()
 
-                all_episodes = requests.get(f"http://127.0.0.1:5000/api/getAnimeLink?n={choixAnime}&s={saison}&v={version}").json()
+                all_episodes = requests.get(f"http://{ip}:{port}/api/getAnimeLink?n={choixAnime}&s={saison}&v={version}").json()
                 # print(all_episodes)
                 break
 
