@@ -1,6 +1,6 @@
 # TODO
 # Intégration du system de langue et peut être gerer plus d'erreur typiquement quand on tape mal le nom y a une erreur
-# System d'arguments pour un mode debug
+# Peut être crée une fonction pour le debug pour eviter les if else ?
 
 import time, os, requests, logging, argparse
 from threading import Thread
@@ -13,9 +13,10 @@ PATH_DOWNLOAD = os.path.join(Yui.PATH, "Anime")
 os.makedirs(PATH_DOWNLOAD, exist_ok=True)
 VALIDE_LANGUAGE = ["FR", "ENG"]
 
-def launchApi(port = 5000, ip="127.0.0.1"):
+def launchApi(args, port = 5000, ip="127.0.0.1"):
     Thread(target=Api.launch, kwargs={"port": port, "ip": ip,"debug_state": False, "reload_status": False}, daemon=True).start()
-    # print("API launched successfully (running in background)")
+    if args.debug:
+        print(f"[DEBUG] API : OK \n[DEBUG] IP : {ip} \n[DEBUG] Port : {port}")
 
 def main():
     parser = argparse.ArgumentParser(
@@ -23,20 +24,23 @@ def main():
     )
 
     parser.add_argument("--debug", action="store_true", help="Active le mode débogage")
-    parser.add_argument("--ip", type=str,  help="Adresse IP souhaitée")
+    parser.add_argument("-i","--ip", type=str,  help="Adresse IP souhaitée")
     parser.add_argument("-p", "--port", type=int, help="Port souhaité")
     
     args = parser.parse_args()
     
-    launchApi(port=args.port, ip=args.ip)
     port = args.port or 5000 # Si port est = None ou 0 alors il prendra la valeur de 5000
     ip = args.ip or "127.0.0.1" # Si ip est = None ou 0 alors elle prendra la valeur 127.0.0.1 
     
+    launchApi(args, port=port, ip=ip)
+    
     time.sleep(0.003)
-    Cardinal.clearScreen()
+    if not args.debug:
+        Cardinal.clearScreen()
 
-    log = logging.getLogger('werkzeug')
-    log.setLevel(logging.ERROR)  # Ne montre que les erreurs de l'api pour évité une polution inutile du prompt
+    if not args.debug:
+        log = logging.getLogger('werkzeug')
+        log.setLevel(logging.ERROR)  # Ne montre que les erreurs de l'api pour évité une polution inutile du prompt
     
     try:
         if not os.path.isfile(Yui.PATH_LANGUAGE):
@@ -46,16 +50,22 @@ def main():
         
         languages = Cardinal.getLanguages(Yui.PATH_LANGUAGE)
 
+        if args.debug:
+            print(f"[DEBUG] Langue : {langue} \n[DEBUG] Languages : {languages}")
+
         # Vérification de l'existance du fichier AnimeInfo.json et si il existe pas recuperation de celui ci 
         os.makedirs(PATH_DIR, exist_ok=True)
         if not os.path.isfile(PATH_ANIME):
             print(languages[langue]["fileNotFound"])
             try:
-                    requests.get(f"http://{ip}:{port}/api/getAllAnime?r=True")
+                requests.get(f"http://{ip}:{port}/api/getAllAnime?r=True")
+                if args.debug:
+                    print(f"[DEBUG] request http://{ip}:{port}/api/getAllAnime?r=True : OK")
             except Exception as e:
                 print(languages[langue]["errorRequets"].format(erreur=e))
                 exit()
-        Cardinal.clearScreen()
+        if not args.debug:
+            Cardinal.clearScreen()
 
         choixAnime = input(languages[langue]["animeName"]).replace(" ", "%20") # le .replace Renplace les espace par des %20
         saison = Cardinal.ask(languages[langue]["typeAsk"], Cardinal.SAISON_OPTIONS) # Ancienne ligne # saison = input(languages[langue]["season"]).strip().lower().replace(" ", "") 
@@ -66,11 +76,11 @@ def main():
                 saison = saison + "1"
             else:
                 saison = saison + saison_num
-
-        # print(saison)
+        
         version = Cardinal.ask(languages[langue]["version"], Cardinal.VERSION_OPTIONS) # Ancienne ligne # version = input(languages[langue]["version"]).strip().lower()
 
-        # print(f"Anime request : {choixAnime}, saison : {saison}, version : {version}") # Dédier au debug dans le cas ou saison et version n'affiche rien il valent la valeur que l'api leur donne donc saison1 et vostfr 
+        if args.debug:
+            print(f"[DEBUG] choixAnime : {choixAnime} \n[DEBUG] saison : {saison} \n[DEBUG] version : {version}") # Dédier au debug dans le cas ou saison et version n'affiche rien il valent la valeur que l'api leur donne donc saison1 et vostfr 
 
         while True:
             if not choixAnime:
@@ -81,29 +91,28 @@ def main():
                 anime_saison = anime_data["Saison"].strip().replace(" ", "").lower()
 
                 all_episodes = requests.get(f"http://{ip}:{port}/api/getAnimeLink?n={choixAnime}&s={saison}&v={version}").json()
-                # print(all_episodes)
+                if args.debug:
+                    print(f"[DEBUG] anime_data : {anime_data} \n[DEBUG] anime_name : {anime_name} \n[DEBUG] anime_saison : {anime_saison} \n[DEBUG] all_episodes : {all_episodes}")
                 break
 
         if all_episodes:
 
-            # print(anime_name)
-            # print(anime_saison)
-            
             for eps in all_episodes:
                 ep_num = eps["episode"]
                 url = eps["url"]
                 current_ep = ep_num + 1 # current_ep numero de l'épisode le plus 1 c'est pour tous décaler correctement et eviter les episode 0
                 ep_id = f"Episode {current_ep}" # Creation du nom de fichier
-                
+
+                if args.debug:
+                    print(f"[DEBUG] ep_num : {ep_num} \n[DEBUG] url : {url} \n[DEBUG] current_ep : {current_ep}, \n[DEBUG] ep_id : {ep_id}")                
 
                 Yui.download(url, PATH_DOWNLOAD, anime_name, anime_saison, version, ep_id, current_ep, languages, langue)
-                # print(ep_id, url)
-                # print(FINAL_PATH)
 
     except KeyboardInterrupt:
         print("\nShutdown...")
-        time.sleep(0.5)
-        # Cardinal.clearScreen() # A rajouté plus tard ?
+        time.sleep(0.65)
+        if not args.debug:
+            Cardinal.clearScreen()
     
     except TypeError:
         print(languages[langue]["BadInformation"].format(choixAnime=choixAnime.replace("%20", " "), saison=saison, version=version))
