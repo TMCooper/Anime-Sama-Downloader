@@ -15,8 +15,7 @@ VALIDE_LANGUAGE = ["FR", "ENG"]
 
 def launchApi(args, port = 5000, ip="127.0.0.1"):
     Thread(target=Api.launch, kwargs={"port": port, "ip": ip,"debug_state": False, "reload_status": False}, daemon=True).start()
-    if args.debug:
-        print(f"[DEBUG] API : OK \n[DEBUG] IP : {ip} \n[DEBUG] Port : {port}")
+    Utils.debugPrint(args, ID=1, ip=ip, port=port)
 
 def main():
     parser = argparse.ArgumentParser(
@@ -47,11 +46,9 @@ def main():
             Yui.getLanguageFile()
 
         langue = Cardinal.ask("What is your language", VALIDE_LANGUAGE).lower() # Ancienne ligne # langue = input(f"What is your language {VALIDE_LANGUAGE} : ").lower().strip()
-        
         languages = Cardinal.getLanguages(Yui.PATH_LANGUAGE)
 
-        if args.debug:
-            print(f"[DEBUG] Langue : {langue} \n[DEBUG] Languages : {languages}")
+        Utils.debugPrint(args, ID=2, langue=langue, languages=languages)
 
         # Vérification de l'existance du fichier AnimeInfo.json et si il existe pas recuperation de celui ci 
         os.makedirs(PATH_DIR, exist_ok=True)
@@ -59,8 +56,8 @@ def main():
             print(languages[langue]["fileNotFound"])
             try:
                 requests.get(f"http://{ip}:{port}/api/getAllAnime?r=True")
-                if args.debug:
-                    print(f"[DEBUG] request http://{ip}:{port}/api/getAllAnime?r=True : OK")
+                Utils.debugPrint(args, ID=3, ip=ip, port=port)
+
             except Exception as e:
                 print(languages[langue]["errorRequets"].format(erreur=e))
                 exit()
@@ -79,8 +76,7 @@ def main():
         
         version = Cardinal.ask(languages[langue]["version"], Cardinal.VERSION_OPTIONS) # Ancienne ligne # version = input(languages[langue]["version"]).strip().lower()
 
-        if args.debug:
-            print(f"[DEBUG] choixAnime : {choixAnime} \n[DEBUG] saison : {saison} \n[DEBUG] version : {version}") # Dédier au debug dans le cas ou saison et version n'affiche rien il valent la valeur que l'api leur donne donc saison1 et vostfr 
+        Utils.debugPrint(args, ID=4, choixAnime=choixAnime, saison=saison, version=version) # Dédier au debug dans le cas ou saison et version n'affiche rien il valent la valeur que l'api leur donne donc saison1 et vostfr 
 
         while True:
             if not choixAnime:
@@ -91,8 +87,7 @@ def main():
                 anime_saison = anime_data["Saison"].strip().replace(" ", "").lower()
 
                 all_episodes = requests.get(f"http://{ip}:{port}/api/getAnimeLink?n={choixAnime}&s={saison}&v={version}").json()
-                if args.debug:
-                    print(f"[DEBUG] anime_data : {anime_data} \n[DEBUG] anime_name : {anime_name} \n[DEBUG] anime_saison : {anime_saison} \n[DEBUG] all_episodes : {all_episodes}")
+                Utils.debugPrint(args, ID=5, anime_data=anime_data, anime_name=anime_name, anime_saison=anime_saison, all_episodes=all_episodes)
                 break
 
         if all_episodes:
@@ -103,9 +98,7 @@ def main():
                 current_ep = ep_num + 1 # current_ep numero de l'épisode le plus 1 c'est pour tous décaler correctement et eviter les episode 0
                 ep_id = f"Episode {current_ep}" # Creation du nom de fichier
 
-                if args.debug:
-                    print(f"[DEBUG] ep_num : {ep_num} \n[DEBUG] url : {url} \n[DEBUG] current_ep : {current_ep}, \n[DEBUG] ep_id : {ep_id}")                
-
+                Utils.debugPrint(args, ID=6, ep_num=ep_num, url=url, current_ep=current_ep, ep_id=ep_id)
                 Yui.download(url, PATH_DOWNLOAD, anime_name, anime_saison, version, ep_id, current_ep, languages, langue)
 
     except KeyboardInterrupt:
