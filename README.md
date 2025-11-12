@@ -15,14 +15,15 @@ python setup.py
 ```
 
 3. Launch the application (after entering the environment):
+```bash
+python main.py
+```
+
 > [!NOTE]
 > - If you want to launch in debug mode simply do ``python main.py --debug``
 > - To launch the API with a specific IP and port, use : ``python main --api-option -ip 127.0.0.1 -port 5001`` or, with shorthand options : ``python main --api-option -i 127.0.0.1 -p 5001`` You can choose any IP or port you want.
 > - If you don’t specify an IP or port, the API will use the default configuration some other exemple : ``python main --api-option -port 5001`` or ``python main --api-option -ip 127.0.0.1``
 > - If you want to run normaly simply do the command below
-```bash
-python main.py
-```
 
 ### Playwright Installation
 If you see this message after installation:
