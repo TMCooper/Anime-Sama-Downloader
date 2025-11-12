@@ -106,9 +106,11 @@ def main():
         time.sleep(0.65)
         if not args.debug:
             Cardinal.clearScreen()
-    
+            exit()
+
     except TypeError:
         print(languages[langue]["BadInformation"].format(choixAnime=choixAnime.replace("%20", " "), saison=saison, version=version))
+        exit()
 
     except Exception as e: # Gestion des erreur tty lier au InquirerPy
         print(languages[langue]["ErrorException"].format(e=e))
