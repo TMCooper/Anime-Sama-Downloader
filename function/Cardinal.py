@@ -41,3 +41,22 @@ class Cardinal:
             choices=options
             ).execute()
         return choix
+
+class Utils:
+    def debugPrint(args, ID=None, **kwargs):
+        if args.debug:
+            match ID:
+                case 1:
+                    print(f"[DEBUG] API : OK \n[DEBUG] IP : {kwargs.get('ip')} \n[DEBUG] Port : {kwargs.get('port')}")
+                case 2:
+                    print(f"[DEBUG] Langue : {kwargs.get('langue')} \n[DEBUG] Languages : {kwargs.get('languages')}")
+                case 3:
+                    print(f"[DEBUG] request http://{kwargs.get('ip')}:{kwargs.get('port')}/api/getAllAnime?r=True : OK")
+                case 4:
+                    print(f"[DEBUG] choixAnime : {kwargs.get('choixAnime')} \n[DEBUG] saison : {kwargs.get('saison')} \n[DEBUG] version : {kwargs.get('version')}")
+                case 5:
+                    print(f"[DEBUG] anime_data : {kwargs.get('anime_data')} \n[DEBUG] anime_name : {kwargs.get('anime_name')} \n[DEBUG] anime_saison : {kwargs.get('anime_saison')} \n[DEBUG] all_episodes : {kwargs.get('all_episodes')}")
+                case 6:
+                    print(f"[DEBUG] ep_num : {kwargs.get('ep_num')} \n[DEBUG] url : {kwargs.get('url')} \n[DEBUG] current_ep : {kwargs.get('current_ep')}, \n[DEBUG] ep_id : {kwargs.get('ep_id')}")
+                case _:
+                    print("Erreur, ID hors de l'index")
