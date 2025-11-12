@@ -1,29 +1,28 @@
 {
     "fr": {
-        "fileNotFound": "Fichier introuvable, récupération des données... Cela peut prendre un certain temps merci de votre patience...",
-        "errorRequets" : "Erreur lors de la requête : {erreur}",
-        "animeName" : "Quel est le nom de votre animer ? : ",
-        "forcedNameAnime" : "Velliez écrire le nom de votre anime : ",
-        "season" : "Quel saison voulez vous ? : ",
-        "typeAsk" : "Quel est le type de contenue que vous voulez télécharger ? : ",
-        "version" : "Quel version voulez vous ? : ",
-        "cardinalLogs" : "[{timestamp}] Échec pour {anime_title} - S{anime_saison}E{episode_number} : {error}\n",
-        "ErrorException" : "\nUne erreur imprevue est survenue : {e}",
-        "BadInformation" : "\nLes informations saisies concernant l'anime {choixAnime} (type : {saison}, version : {version}) semblent incorrectes. Veuillez vérifier vos données et réessayer.",
-        "ytDlpFinish" : "\n[download] Téléchargement terminé."
+        "fileNotFound": "Fichier introuvable, récupération des données... Cela peut prendre un certain temps, merci de votre patience...",
+        "errorRequets": "Erreur lors de la requête : {erreur}",
+        "animeName": "Quel est le nom de votre anime ? : ",
+        "forcedNameAnime": "Veuillez écrire le nom de votre anime : ",
+        "season": "Quelle saison voulez-vous ? : ",
+        "typeAsk": "Quel type de contenu voulez-vous télécharger ? : ",
+        "version": "Quelle version voulez-vous ? : ",
+        "cardinalLogs": "[{timestamp}] Échec pour {anime_title} - S{anime_saison}E{episode_number} : {error}\n",
+        "ErrorException": "\nUne erreur imprévue est survenue : {e}",
+        "BadInformation": "\nLes informations saisies concernant l'anime {choixAnime} (type : {saison}, version : {version}) semblent incorrectes. Veuillez vérifier vos données et réessayer.",
+        "ytDlpFinish": "\n[download] Téléchargement terminé."
     },
     "eng": {
         "fileNotFound": "File not found, recovering data... This may take some time, thank you for your patience...",
         "errorRequets": "Error during query: {erreur}",
-        "animeName": "What is the name of your anime ? : ",
+        "animeName": "What is the name of your anime? : ",
         "forcedNameAnime": "Please write the name of your anime: ",
-        "season" : "Which season do you want ? : ",
-        "typeAsk": "What type of content do you want to download ? : ",
-        "version": "Which version do you want ?  : ",
+        "season": "Which season do you want? : ",
+        "typeAsk": "What type of content do you want to download? : ",
+        "version": "Which version do you want? : ",
         "cardinalLogs": "[{timestamp}] Failed for {anime_title} - S{anime_saison}E{episode_number} : {error}\n",
-        "ErrorException": "\nAn unexpected error has occurred : {e}",
-        "BadInformation" : "\nThe information entered for the anime {choixAnime} (type: {saison}, version: {version}) appears to be incorrect. Please check your details and try again.",
-        "ytDlpFinish" : "\n[download] Download complete."
-
+        "ErrorException": "\nAn unexpected error has occurred: {e}",
+        "BadInformation": "\nThe information entered for the anime {choixAnime} (type: {saison}, version: {version}) appears to be incorrect. Please check your details and try again.",
+        "ytDlpFinish": "\n[download] Download complete."
     }
 }
