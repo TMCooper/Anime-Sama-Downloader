@@ -1,3 +1,7 @@
+<picture>
+    <img align="right" src="https://wakatime.com/badge/github/TMCooper/Anime-Sama-Downloader.svg" alt="Typing SVG"/>
+</picture>
+
 # Anime-Sama-Downloader
 
 A fast and efficient downloader for anime from Anime-Sama.
