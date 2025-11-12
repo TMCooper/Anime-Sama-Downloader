@@ -33,6 +33,8 @@ playwright install
 ```
 
 ## Usage
+> [!NOTE]
+> - If you want to launch in debug mode simply do ``python main.py --debug-mode`` and if you want to launch the api with spécial ip and port do ``python main --api-option -IP 127.0.0.1 -P 5001`` for exemple of course you can do what you want with the port or the ip and if you dont presice Port or IP by default it will be the default configuration like you simply do ``python main.py`` but with only the args you have complited 
 
 1. Verify your anime exists on [Anime-Sama](https://anime-sama.org)
 2. Launch `main.py`
