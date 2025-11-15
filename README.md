@@ -63,7 +63,7 @@ playwright install
 1. Verify your anime exists on [Anime-Sama](https://anime-sama.org)
 2. Launch `main.py`
 3. Enter the anime name (e.g., "Frieren")
-4. choose between ``saison`` (season) ``film`` (movie), ``oav`` and autre (other)
+4. choose between ``saison`` (season) ``film`` (movie), ``oav`` and ``autre`` (other)
    - Note: If you choose ``saison`` (season) keep in mind that if the field is empty, it will default to the first season
 5. Choose the version: `vostfr` or `vf`
 
