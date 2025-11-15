@@ -4,7 +4,7 @@ from datetime import datetime
 
 class Cardinal:
    
-    SAISON_OPTIONS = ["saison", "film", "oav"]
+    SAISON_OPTIONS = ["saison", "film", "oav", "autre"]
     VERSION_OPTIONS = ["vostfr", "vf"]
 
     OUTPUT_DIRECTORY = "Logs"

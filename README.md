@@ -57,10 +57,13 @@ playwright install
 
 ## Usage
 
+>[!IMPORTANT]
+>If your anime's name contains, for example, "season name," "remake 2024," or something similar, then copy and paste that same name. For example, if you want to play season 1 part 1 "Cinderella Gray" for anime, enter the same name but choose "other image," for example [here](/ressources/images/exempleNomAttypique.png).
+
 1. Verify your anime exists on [Anime-Sama](https://anime-sama.org)
 2. Launch `main.py`
 3. Enter the anime name (e.g., "Frieren")
-4. choose between ``saison`` (season) ``film`` (movie) and ``oav``
+4. choose between ``saison`` (season) ``film`` (movie), ``oav`` and autre (other)
    - Note: If you choose ``saison`` (season) keep in mind that if the field is empty, it will default to the first season
 5. Choose the version: `vostfr` or `vf`
 

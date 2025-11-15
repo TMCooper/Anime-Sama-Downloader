@@ -1,6 +1,6 @@
 # TODO
 # Intégration du system de langue et peut être gerer plus d'erreur typiquement quand on tape mal le nom y a une erreur
-# Peut être crée une fonction pour le debug pour eviter les if else ?
+# Normalisation des titre des anime a faire probablement dans le backend.py
 
 import time, os, requests, logging, argparse
 from threading import Thread
@@ -73,7 +73,9 @@ def main():
                 saison = saison + "1"
             else:
                 saison = saison + saison_num
-        
+        if saison == "autre":
+                saison = str(input(f"Si votre anime a un nom autre que saison noté le ici : "))
+
         version = Cardinal.ask(languages[langue]["version"], Cardinal.VERSION_OPTIONS) # Ancienne ligne # version = input(languages[langue]["version"]).strip().lower()
 
         Utils.debugPrint(args, ID=4, choixAnime=choixAnime, saison=saison, version=version) # Dédier au debug dans le cas ou saison et version n'affiche rien il valent la valeur que l'api leur donne donc saison1 et vostfr 
