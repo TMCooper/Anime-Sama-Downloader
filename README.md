@@ -85,7 +85,7 @@ The downloader will automatically process your request and stop when it's comple
 
 Have an idea ? Share it in our [Ideas Discussion](https://github.com/TMCooper/Anime-Sama-Downloader/discussions/categories/ideas)!
 
-## Demo (currently not same update soon)
+## Demo
 
 <img src="./ressources/docs/demo.gif" width="100%" align="center" alt="Anime-Sama-Downloader Demo">
 
