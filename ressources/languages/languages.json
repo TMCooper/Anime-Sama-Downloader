@@ -10,7 +10,12 @@
         "cardinalLogs": "[{timestamp}] Échec pour {anime_title} - S{anime_saison}E{episode_number} : {error}\n",
         "ErrorException": "\nUne erreur imprévue est survenue : {e}",
         "BadInformation": "\nLes informations saisies concernant l'anime {choixAnime} (type : {saison}, version : {version}) semblent incorrectes. Veuillez vérifier vos données et réessayer.",
-        "ytDlpFinish": "\n[download] Téléchargement terminé."
+        "ytDlpFinish": "\n[download] Téléchargement terminé.",
+        "checkUpdate": "Le programme executé n'est pas a jour souhaité vous le metre a jour ?",
+        "YesNo": ["Oui", "Non"],
+        "gitCheck" : "Erreur : Git n'est pas installé. Veuillez d'abord installer Git. \nTéléchargement : https://git-scm.com/downloads",
+        "otherSaisonChoice" : "Si votre anime a un nom autre que 'saison' noté le ici : ",
+        "statsChoice" : "Souhaitez-vous aider à améliorer Anime-Sama en partageant anonymement les titres que vous regardez ?\nAucune donnée personnelle n'est collectée, et votre confidentialité est entièrement respectée. "
     },
     "eng": {
         "fileNotFound": "File not found, recovering data... This may take some time, thank you for your patience...",
@@ -23,6 +28,11 @@
         "cardinalLogs": "[{timestamp}] Failed for {anime_title} - S{anime_saison}E{episode_number} : {error}\n",
         "ErrorException": "\nAn unexpected error has occurred: {e}",
         "BadInformation": "\nThe information entered for the anime {choixAnime} (type: {saison}, version: {version}) appears to be incorrect. Please check your details and try again.",
-        "ytDlpFinish": "\n[download] Download complete."
+        "ytDlpFinish": "\n[download] Download complete.",
+        "checkUpdate": "The program being run is not up to date. Would you like to update it ?",
+        "YesNo": ["Yes", "No"],
+        "gitCheck" : "Error: Git is not installed. Please install Git first. \nDownload: https://git-scm.com/downloads",
+        "otherSaisonChoice": "If your anime has a name other than 'season', please write it here : ",
+        "statsChoice": "Would you like to help improve Anime-Sama by anonymously sharing the titles you watch ?\nNo personal data is collected, and your privacy is fully respected."
     }
 }
