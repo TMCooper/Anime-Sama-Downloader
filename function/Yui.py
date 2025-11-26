@@ -63,7 +63,6 @@ class Yui:
         URL = "https://raw.githubusercontent.com/TMCooper/Anime-Sama-Downloader/refs/heads/main/ressources/languages/languages.json"
 
         reponse = requests.get(URL).json()
-        # print(reponse)
 
         os.makedirs(Yui.PATH_LANGUAGE_FOLDER, exist_ok=True)
         time.sleep(0.003)
