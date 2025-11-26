@@ -32,7 +32,7 @@ def main():
     
     launchApi(args, port=port, ip=ip)
     
-    while True: # Boucle pour que quand l'api sois prete on passe a la suite
+    while True: # Boucle pour qu'une fois l'api prete on passe a la suite
         try:
             requests.get(f"http://{ip}:{port}/")  # Endpoint de test
             break
