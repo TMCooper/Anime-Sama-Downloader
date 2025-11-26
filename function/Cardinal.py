@@ -117,7 +117,6 @@ class Utils:
             reponse = Cardinal.ask(languages[langue]["checkUpdate"], CHOIX_OPTIONS)
             if reponse.lower() in ["yes", "oui"]:
                 updater_path = os.path.join(PATH_UPDATE_FOLDER, "updater.py")
-                # Lance updater puis quitte
                 subprocess.Popen([sys.executable, updater_path] + sys.argv)
                 exit(0)
             else:
