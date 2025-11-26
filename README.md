@@ -8,6 +8,10 @@ A fast and efficient downloader for anime from Anime-Sama.
 
 ## Installation
 
+> [!IMPORTANT]
+> This project requires **Git** to be installed.  
+> Download: [here](https://git-scm.com/downloads)
+
 1. Clone the repository with submodules:
 ```bash
 git clone https://github.com/TMCooper/Anime-Sama-Downloader.git --recurse-submodules
