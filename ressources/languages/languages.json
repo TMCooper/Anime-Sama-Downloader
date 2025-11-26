@@ -15,7 +15,8 @@
         "YesNo": ["Oui", "Non"],
         "gitCheck" : "Erreur : Git n'est pas installé. Veuillez d'abord installer Git. \nTéléchargement : https://git-scm.com/downloads",
         "otherSaisonChoice" : "Si votre anime a un nom autre que 'saison' noté le ici : ",
-        "statsChoice" : "Souhaitez-vous aider à améliorer Anime-Sama en partageant anonymement les titres que vous regardez ?\nAucune donnée personnelle n'est collectée, et votre confidentialité est entièrement respectée. "
+        "statsChoice" : "Souhaitez-vous aider à améliorer Anime-Sama en partageant anonymement les titres que vous regardez ?\nAucune donnée personnelle n'est collectée, et votre confidentialité est entièrement respectée. ",
+        "updateChoice" : "S'il vous plait effectuer : git pull origin main"
     },
     "eng": {
         "fileNotFound": "File not found, recovering data... This may take some time, thank you for your patience...",
@@ -33,6 +34,7 @@
         "YesNo": ["Yes", "No"],
         "gitCheck" : "Error: Git is not installed. Please install Git first. \nDownload: https://git-scm.com/downloads",
         "otherSaisonChoice": "If your anime has a name other than 'season', please write it here : ",
-        "statsChoice": "Would you like to help improve Anime-Sama by anonymously sharing the titles you watch ?\nNo personal data is collected, and your privacy is fully respected."
+        "statsChoice": "Would you like to help improve Anime-Sama by anonymously sharing the titles you watch ?\nNo personal data is collected, and your privacy is fully respected.",
+        "updateChoice": "Please perform : git pull origin main"
     }
 }
