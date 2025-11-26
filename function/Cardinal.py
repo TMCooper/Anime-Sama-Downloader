@@ -115,9 +115,11 @@ class Utils:
         if local_hash != remote_hash:
             reponse = Cardinal.ask(languages[langue]["checkUpdate"], CHOIX_OPTIONS)
             if reponse.lower() in ["yes", "oui"]:
-                subprocess.run(["git", "reset", "--hard"], shell=True) # Prevoie le cas ou les utilisateur aurais fait des modification au code
-                subprocess.run(["git", "pull", "origin", "main"], shell=True) # Rapatrie la dernière version du code
-                os.execv(sys.executable, [sys.executable] + sys.argv) # Reboot le code une fois la mise a jour faite
+                updater_path = os.path.join(os.path.dirname(__file__), "ressources", "updater", "updater.py")
+
+                # Lance updater puis quitte
+                subprocess.Popen([sys.executable, updater_path] + sys.argv)
+                exit(0)
             else:
                 exit(1)
 
