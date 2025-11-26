@@ -115,8 +115,8 @@ class Utils:
         if local_hash != remote_hash:
             reponse = Cardinal.ask(languages[langue]["checkUpdate"], CHOIX_OPTIONS)
             if reponse in ["yes", "oui"]:
-                subprocess.run(["git", "reset", "--hard"], shell=True) # Prevoie le cas ou les utilisateur aurais fait des modification au code affin de ne pas avoir de soucis
-                subprocess.run(["git", "pull", "origin", "main"], shell=True) # Rapatrie la dernière version du code
+                subprocess.run("git reset --hard", shell=True) # Prevoie le cas ou les utilisateur aurais fait des modification au code affin de ne pas avoir de soucis
+                subprocess.run("git pull origin main", shell=True) # Rapatrie la dernière version du code
                 os.execv(sys.executable, [sys.executable] + sys.argv) # Reboot le code une fois la mise a jour effectuer
             else:
                 exit(1)
