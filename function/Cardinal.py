@@ -114,7 +114,6 @@ class Utils:
         Utils.debugPrint(args, ID=7, local_hash=local_hash, remote_hash=remote_hash)
 
         if local_hash != remote_hash:
-            updater_path = os.path.join(PATH_UPDATE_FOLDER, "updater.py")
             reponse = Cardinal.ask(languages[langue]["checkUpdate"], CHOIX_OPTIONS)
             if reponse.lower() in ["yes", "oui"]:
                 updater_path = os.path.join(PATH_UPDATE_FOLDER, "updater.py")
