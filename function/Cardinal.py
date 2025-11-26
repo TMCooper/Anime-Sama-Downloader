@@ -124,8 +124,7 @@ class Utils:
                     exit(1)
                 
                 # Reset
-                res_reset = subprocess.run(["git", "reset", "--hard"], 
-                                        capture_output=True, text=True)
+                res_reset = subprocess.run(["git", "reset", "--hard"], capture_output=True, text=True)
                 if res_reset.returncode != 0:
                     print("ERREUR lors du reset:")
                     print(res_reset.stderr)
