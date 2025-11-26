@@ -116,8 +116,7 @@ class Utils:
             reponse = Cardinal.ask(languages[langue]["checkUpdate"], CHOIX_OPTIONS)
             if reponse in ["yes", "oui"]:
                 # Vérifier qu'on est dans un repo git
-                check_git = subprocess.run(["git", "rev-parse", "--git-dir"], 
-                                        capture_output=True, text=True)
+                check_git = subprocess.run(["git", "rev-parse", "--git-dir"], capture_output=True, text=True)
                 if check_git.returncode != 0:
                     print("ERREUR: Pas dans un dépôt git !")
                     exit(1)
@@ -132,8 +131,7 @@ class Utils:
                 print("Reset OK:", res_reset.stdout)
                 
                 # Pull
-                res_pull = subprocess.run(["git", "pull", "origin", "main"], 
-                                        capture_output=True, text=True)
+                res_pull = subprocess.run(["git", "pull", "origin", "main"], capture_output=True, text=True)
                 if res_pull.returncode != 0:
                     print("ERREUR lors du pull:")
                     print(res_pull.stderr)
