@@ -4,6 +4,7 @@ from datetime import datetime
 
 PATH = os.getcwd()
 PATH_STATS_FOLDER = os.path.join(PATH, "ressources", "Utils")
+PATH_UPDATE_FOLDER = os.path.join(PATH, "ressources", "updater")
 STATS_CHOICE_FILE = os.path.join(PATH_STATS_FOLDER, "statsChoice.json")
 
 class Cardinal:
@@ -115,8 +116,7 @@ class Utils:
         if local_hash != remote_hash:
             reponse = Cardinal.ask(languages[langue]["checkUpdate"], CHOIX_OPTIONS)
             if reponse.lower() in ["yes", "oui"]:
-                updater_path = os.path.join(os.path.dirname(__file__),  "ressources", "updater", "updater.py")
-
+                updater_path = os.path.join(PATH_UPDATE_FOLDER, "updater.py")
                 # Lance updater puis quitte
                 subprocess.Popen([sys.executable, updater_path] + sys.argv)
                 exit(0)
