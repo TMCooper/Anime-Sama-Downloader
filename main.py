@@ -1,6 +1,3 @@
-# TODO
-# Peut être gerer plus d'erreur typiquement quand on tape mal le nom y a une erreur
-
 import time, os, requests, logging, argparse
 from threading import Thread
 from AnimeSamaApi.main import Api
