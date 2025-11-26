@@ -37,7 +37,7 @@ def main():
             requests.get(f"http://{ip}:{port}/")  # Endpoint de test
             break
         except requests.exceptions.ConnectionError:
-            time.sleep(0.1)
+            time.sleep(0.25)
     
     if not args.debug:
         Cardinal.clearScreen()
