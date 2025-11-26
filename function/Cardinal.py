@@ -14,7 +14,7 @@ class Cardinal:
 
     OUTPUT_DIRECTORY = "Logs"
     
-    @staticmethod # Normalement fonctionelle
+    @staticmethod # Normalement fonctionelle dans mais peut être voir si dans le cas ou on ne trouve rien ?
     def log_error(anime_title, anime_saison, episode_number, error, languages, langue):
         """Enregistre les erreurs dans un fichier de log"""
         os.makedirs(Cardinal.OUTPUT_DIRECTORY, exist_ok=True)
