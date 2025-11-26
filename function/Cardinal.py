@@ -50,7 +50,7 @@ class Cardinal:
     @staticmethod
     def getStatsChoice(args, languages, langue): # Demande a l'utilisateur si il accèpte de participer ou non
         os.makedirs(PATH_STATS_FOLDER, exist_ok=True)
-        if not os.path.isfile(STATS_CHOICE_FILE): # Faire ici aussi un system de log ? j'pense en vrai
+        if not os.path.isfile(STATS_CHOICE_FILE):
             choix = Cardinal.ask(languages[langue]["statsChoice"], languages[langue]["YesNo"])
             if choix.lower() in ["yes", "oui"]:
                 with open(STATS_CHOICE_FILE, "w", encoding='utf-8') as f:
