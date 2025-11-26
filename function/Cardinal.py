@@ -114,7 +114,9 @@ class Utils:
 
         if local_hash != remote_hash:
             reponse = Cardinal.ask(languages[langue]["checkUpdate"], CHOIX_OPTIONS)
+            print(reponse)
             if reponse in ["yes", "oui"]:
+                print("OK")
                 # Vérifier qu'on est dans un repo git
                 check_git = subprocess.run(["git", "rev-parse", "--git-dir"], capture_output=True, text=True)
                 if check_git.returncode != 0:
