@@ -116,7 +116,7 @@ class Utils:
         if local_hash != remote_hash:
             reponse = Cardinal.ask(languages[langue]["checkUpdate"], CHOIX_OPTIONS)
             if reponse.lower() in ["yes", "oui"]:
-                updater_path = os.path.join(PATH_UPDATE_FOLDER, "updater.py")
+                updater_path = os.path.join(PATH_UPDATE_FOLDER, "updater.py") # Trouve updater.py
                 subprocess.Popen([sys.executable, updater_path] + sys.argv)
                 exit(0)
             else:
