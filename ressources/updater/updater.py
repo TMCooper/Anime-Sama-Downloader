@@ -9,6 +9,7 @@ def main():
 
     script_principal = os.path.join(os.path.dirname(__file__), "..", "..", "main.py")  # chemin relatif
     subprocess.Popen([sys.executable, script_principal])
+    exit(0)
 
 if __name__ == "__main__":
     main()
