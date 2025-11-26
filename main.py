@@ -33,9 +33,6 @@ def main():
     if not os.path.isfile(Yui.PATH_LANGUAGE):
         Yui.getLanguageFile()
     
-    langue = Cardinal.ask("What is your language", VALIDE_LANGUAGE).lower() # Ancienne ligne # langue = input(f"What is your language {VALIDE_LANGUAGE} : ").lower().strip()
-    languages = Cardinal.getLanguages(Yui.PATH_LANGUAGE)
-    
     launchApi(args, port=port, ip=ip)
     
     while True: # Boucle pour que quand l'api sois prete on passe a la suite
@@ -53,6 +50,9 @@ def main():
         log.setLevel(logging.ERROR)  # Ne montre que les erreurs de l'api pour évité une polution inutile du prompt
     
     try:
+        langue = Cardinal.ask("What is your language", VALIDE_LANGUAGE).lower() # Ancienne ligne # langue = input(f"What is your language {VALIDE_LANGUAGE} : ").lower().strip()
+        languages = Cardinal.getLanguages(Yui.PATH_LANGUAGE)
+        
         Utils.debugPrint(args, ID=2, langue=langue, languages=languages)
         Utils.gitCheck(languages, langue) # Vérifie l'installation corecte de git sur la machine
         Utils.hashCheck(args, languages, langue) # Vérifie la mise a jour du code
