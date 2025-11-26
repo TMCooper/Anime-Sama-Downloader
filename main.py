@@ -1,6 +1,5 @@
 # TODO
-# Intégration du system de langue et peut être gerer plus d'erreur typiquement quand on tape mal le nom y a une erreur
-# Normalisation des titre des anime a faire probablement dans le backend.py
+# Peut être gerer plus d'erreur typiquement quand on tape mal le nom y a une erreur
 
 import time, os, requests, logging, argparse
 from threading import Thread
@@ -31,9 +30,21 @@ def main():
     port = args.port or 5000 # Si port est = None ou 0 alors il prendra la valeur de 5000
     ip = args.ip or "127.0.0.1" # Si ip est = None ou 0 alors elle prendra la valeur 127.0.0.1 
     
+    if not os.path.isfile(Yui.PATH_LANGUAGE):
+        Yui.getLanguageFile()
+    
+    langue = Cardinal.ask("What is your language", VALIDE_LANGUAGE).lower() # Ancienne ligne # langue = input(f"What is your language {VALIDE_LANGUAGE} : ").lower().strip()
+    languages = Cardinal.getLanguages(Yui.PATH_LANGUAGE)
+    
     launchApi(args, port=port, ip=ip)
     
-    time.sleep(0.003)
+    while True: # Boucle pour que quand l'api sois prete on passe a la suite
+        try:
+            requests.get(f"http://{ip}:{port}/")  # Endpoint de test
+            break
+        except requests.exceptions.ConnectionError:
+            time.sleep(0.1)
+    
     if not args.debug:
         Cardinal.clearScreen()
 
@@ -42,13 +53,10 @@ def main():
         log.setLevel(logging.ERROR)  # Ne montre que les erreurs de l'api pour évité une polution inutile du prompt
     
     try:
-        if not os.path.isfile(Yui.PATH_LANGUAGE):
-            Yui.getLanguageFile()
-
-        langue = Cardinal.ask("What is your language", VALIDE_LANGUAGE).lower() # Ancienne ligne # langue = input(f"What is your language {VALIDE_LANGUAGE} : ").lower().strip()
-        languages = Cardinal.getLanguages(Yui.PATH_LANGUAGE)
-
         Utils.debugPrint(args, ID=2, langue=langue, languages=languages)
+        Utils.gitCheck(languages, langue) # Vérifie l'installation corecte de git sur la machine
+        Utils.hashCheck(args, languages, langue) # Vérifie la mise a jour du code
+        statChoice = Cardinal.getStatsChoice(args, languages, langue) # Demande l'accord de l'utilisateur
 
         # Vérification de l'existance du fichier AnimeInfo.json et si il existe pas recuperation de celui ci 
         os.makedirs(PATH_DIR, exist_ok=True)
@@ -60,7 +68,7 @@ def main():
 
             except Exception as e:
                 print(languages[langue]["errorRequets"].format(erreur=e))
-                exit()
+                exit(1)
         if not args.debug:
             Cardinal.clearScreen()
 
@@ -74,7 +82,7 @@ def main():
             else:
                 saison = saison + saison_num
         if saison == "autre":
-                saison = str(input(f"Si votre anime a un nom autre que saison noté le ici : "))
+                saison = str(input(languages[langue]["otherSaisonChoice"]))
 
         version = Cardinal.ask(languages[langue]["version"], Cardinal.VERSION_OPTIONS) # Ancienne ligne # version = input(languages[langue]["version"]).strip().lower()
 
@@ -90,10 +98,14 @@ def main():
 
                 all_episodes = requests.get(f"http://{ip}:{port}/api/getAnimeLink?n={choixAnime}&s={saison}&v={version}").json()
                 Utils.debugPrint(args, ID=5, anime_data=anime_data, anime_name=anime_name, anime_saison=anime_saison, all_episodes=all_episodes)
+                
+                if statChoice == True:
+                    total_episodes = max(ep["episode"] for ep in all_episodes) + 1
+                    requests.get(f"https://animestats.fuyuki.me/api/stats?n={anime_name}&s={anime_saison}&e={total_episodes}") # Requeste l'api uniquement si l'utilisateur est d'accord
+                
                 break
 
         if all_episodes:
-
             for eps in all_episodes:
                 ep_num = eps["episode"]
                 url = eps["url"]
@@ -108,11 +120,11 @@ def main():
         time.sleep(0.65)
         if not args.debug:
             Cardinal.clearScreen()
-            exit()
+            exit(1)
 
     except TypeError:
         print(languages[langue]["BadInformation"].format(choixAnime=choixAnime.replace("%20", " "), saison=saison, version=version))
-        exit()
+        exit(1)
 
     except Exception as e: # Gestion des erreur tty lier au InquirerPy
         print(languages[langue]["ErrorException"].format(e=e))
