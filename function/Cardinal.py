@@ -140,8 +140,7 @@ class Utils:
                 print("Pull OK:", res_pull.stdout)
                 
                 # Vérifier que la mise à jour a bien eu lieu
-                new_hash = subprocess.run(["git", "rev-parse", "HEAD"],
-                                        capture_output=True, text=True).stdout.strip()
+                new_hash = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
                 print(f"Nouvelle version: {new_hash[:8]}")
                 
                 # Reboot
