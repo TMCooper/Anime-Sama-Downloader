@@ -1,4 +1,4 @@
-import platform, json, os, subprocess, sys, shutil
+import platform, json, os, subprocess, shutil
 from InquirerPy import inquirer
 from datetime import datetime
 
