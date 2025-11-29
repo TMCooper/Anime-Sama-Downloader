@@ -82,7 +82,7 @@ The downloader will automatically process your request and stop when it's comple
 ## Recent Updates
 
 - New system for update notifications and anonymous stats collection. 
-  (The file `ressources/Utils/statsChoice.json` will be created at first run. 
+  (The file `ressources/Utils/statsChoices.json` will be created at first run. 
   You can change your choice anytime by editing it: replace "yes"/"oui" with "no"/"non".)
 - Added argument system: debug (--debug), IP (-i), Port (-p)
 - Complete project rework using a new API : [AnimeSamaApi](https://github.com/TMCooper/AnimeSamaApi/)
