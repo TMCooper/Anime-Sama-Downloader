@@ -81,7 +81,7 @@ The downloader will automatically process your request and stop when it's comple
 
 ## Recent Updates
 
-- New system for update notifications and anonymous stats collection. 
+- New system for update notifications and anonymous stats collection [here](https://animestats.fuyuki.me/api/renderStats). 
   (The file `ressources/Utils/statsChoices.json` will be created at first run. 
   You can change your choice anytime by editing it: replace "yes"/"oui" with "no"/"non".)
 - Added argument system: debug (--debug), IP (-i), Port (-p)
