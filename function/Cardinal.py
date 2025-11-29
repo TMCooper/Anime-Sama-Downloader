@@ -5,7 +5,7 @@ from datetime import datetime
 PATH = os.getcwd()
 PATH_STATS_FOLDER = os.path.join(PATH, "ressources", "Utils")
 PATH_UPDATE_FOLDER = os.path.join(PATH, "ressources", "updater")
-STATS_CHOICE_FILE = os.path.join(PATH_STATS_FOLDER, "statsChoice.json")
+STATS_CHOICE_FILE = os.path.join(PATH_STATS_FOLDER, "statsChoices.json")
 
 class Cardinal:
 
