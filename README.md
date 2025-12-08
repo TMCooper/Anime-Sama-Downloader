@@ -81,6 +81,7 @@ The downloader will automatically process your request and stop when it's comple
 
 ## Recent Updates
 
+- Update submodule 
 - New system for update notifications and anonymous stats collection [here](https://animestats.fuyuki.me/api/renderStats). 
   (The file `ressources/Utils/statsChoices.json` will be created at first run. 
   You can change your choice anytime by editing it: replace "yes"/"oui" with "no"/"non".)
@@ -90,6 +91,12 @@ The downloader will automatically process your request and stop when it's comple
 ## Contributing
 
 Have an idea ? Share it in our [Ideas Discussion](https://github.com/TMCooper/Anime-Sama-Downloader/discussions/categories/ideas)!
+
+## Troobleshooting
+- Reclone the project
+    Delete the project folder and clone it again from the repository.
+
+- Reset the cached data, Go to: ``AnimeSamaApi/src/data/json`` and then delete the file: ``AnimeInfo.json``, After that, try running main.py again from the root folder.
 
 ## Stat Dashboard
 You can acces de site [here](https://animestats.fuyuki.me/api/renderStats) and for any issue you can go to the repo [here](https://github.com/TMCooper/AnimeStatsAPI)
