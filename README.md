@@ -2,6 +2,21 @@
     <img align="right" src="https://wakatime.com/badge/github/TMCooper/Anime-Sama-Downloader.svg" alt="Typing SVG"/>
 </picture>
 
+## Table of Contents
+
+- [Anime-Sama-Downloader](#anime-sama-downloader)
+  - [Installation](#installation)
+    - [Playwright Installation](#playwright-installation)
+  - [Usage](#usage)
+  - [Important Warning](#important-warning)
+  - [Recent Updates](#recent-updates)
+  - [Contributing](#contributing)
+  - [Troubleshooting](#troubleshooting)
+  - [Stat Dashboard](#stat-dashboard)
+  - [Demo](#demo)
+  - [Star History](#star-history)
+
+
 # Anime-Sama-Downloader
 
 A fast and efficient downloader for anime from Anime-Sama.
@@ -92,7 +107,7 @@ The downloader will automatically process your request and stop when it's comple
 
 Have an idea ? Share it in our [Ideas Discussion](https://github.com/TMCooper/Anime-Sama-Downloader/discussions/categories/ideas)!
 
-## Troobleshooting
+## Troubleshooting
 - Reclone the project
     Delete the project folder and clone it again from the repository.
 
