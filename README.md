@@ -2,6 +2,10 @@
     <img align="right" src="https://wakatime.com/badge/github/TMCooper/Anime-Sama-Downloader.svg" alt="Typing SVG"/>
 </picture>
 
+# Anime-Sama-Downloader
+
+A fast and efficient downloader for anime from Anime-Sama.
+
 ## Table of Contents
 
 - [Anime-Sama-Downloader](#anime-sama-downloader)
@@ -15,11 +19,6 @@
   - [Stat Dashboard](#stat-dashboard)
   - [Demo](#demo)
   - [Star History](#star-history)
-
-
-# Anime-Sama-Downloader
-
-A fast and efficient downloader for anime from Anime-Sama.
 
 ## Installation
 
