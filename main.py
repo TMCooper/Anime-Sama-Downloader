@@ -90,6 +90,11 @@ def main():
                 choixAnime = input(languages[langue]["forcedNameAnime"])
             else:
                 anime_data = requests.get(f"http://{ip}:{port}/api/getSpecificAnime?q={choixAnime}&s={saison}").json()
+                if anime_data is None: # Si notre api renvoie none c'est que l'actualisation de domaine a été effectué et donc qu'une actualisation de celle ci a été faite donc on retente juste après
+                    anime_data = requests.get(
+                        f"http://{ip}:{port}/api/getSpecificAnime?q={choixAnime}&s={saison}"
+                    ).json()
+
                 anime_name = anime_data["title"]
                 anime_saison = anime_data["Saison"].strip().replace(" ", "").lower()
 
