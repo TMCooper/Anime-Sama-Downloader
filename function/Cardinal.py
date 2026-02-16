@@ -49,15 +49,21 @@ class Cardinal:
     
     @staticmethod
     def getStatsChoice(args, languages, langue): # Demande a l'utilisateur si il accèpte de participer ou non
+        print(PATH_STATS_FOLDER);
         os.makedirs(PATH_STATS_FOLDER, exist_ok=True)
         if not os.path.isfile(STATS_CHOICE_FILE):
             choix = Cardinal.ask(languages[langue]["statsChoice"], languages[langue]["YesNo"])
+            data = [
+                {"choix": "false"}
+            ]
             if choix.lower() in ["yes", "oui"]:
-                with open(STATS_CHOICE_FILE, "w", encoding='utf-8') as f:
-                    data = [
-                        {"choix": choix.lower()}
-                        ]
-                    json.dump(data, f, indent=4, ensure_ascii=False)
+                data = [
+                    {"choix": choix.lower()}
+                ]
+
+            with open(STATS_CHOICE_FILE, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=4, ensure_ascii=False)
+                    
         
         with open(STATS_CHOICE_FILE, "r", encoding='utf-8') as data:
             data = json.load(data)
