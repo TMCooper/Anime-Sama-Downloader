@@ -1,5 +1,6 @@
-import time, os, requests, logging, argparse
+import time, os, requests, logging, argparse, queue
 from threading import Thread
+from concurrent.futures import ThreadPoolExecutor # Utilitaire de gestion pour le multi thread
 from AnimeSamaApi.main import Api
 from AnimeSamaApi.src.backend import PATH_DIR, PATH_ANIME # Pour verifier si le fichier AnimeInfo.json est bien la
 from function.Yui import *
@@ -55,6 +56,25 @@ def main():
         Utils.hashCheck(args, languages, langue) # Vérifie la mise a jour du code
         statChoice = Cardinal.getStatsChoice(args, languages, langue) # Demande l'accord de l'utilisateur
 
+        threadUserChoice = Cardinal.ask(languages[langue]["threadUserChoice"], Cardinal.THREAD_OPTIONS.get(langue))
+        Utils.debugPrint(args, ID=9, threadUserChoice=threadUserChoice)
+
+        threadUserChoice = threadUserChoice.lower() in Cardinal.TRUE_VALUES
+        Utils.debugPrint(args, ID=10, threadUserChoice=threadUserChoice)
+
+        try:
+            thread_count_input = input(languages[langue]["threadCountAsk"])
+            if not thread_count_input.strip():
+                max_workers = 4
+            else:
+                max_workers = int(thread_count_input)
+                Utils.debugPrint(args, ID=12, thread_count_input=thread_count_input)
+                if max_workers < 1:
+                    max_workers = 4
+        except (ValueError, KeyError):
+            max_workers = 4
+        Utils.debugPrint(args, ID=13, max_workers=max_workers)
+
         # Vérification de l'existance du fichier AnimeInfo.json et si il existe pas recuperation de celui ci 
         os.makedirs(PATH_DIR, exist_ok=True)
         if not os.path.isfile(PATH_ANIME):
@@ -108,14 +128,47 @@ def main():
                 break
 
         if all_episodes:
+            # Préparation des data commune au deux boucle
+            tasks = []
             for eps in all_episodes:
-                ep_num = eps["episode"]
-                url = eps["url"]
-                current_ep = ep_num + 1 # current_ep numero de l'épisode le plus 1 c'est pour tous décaler correctement et eviter les episode 0
-                ep_id = f"Episode {current_ep}" # Creation du nom de fichier
+                current_ep = eps["episode"] + 1
+                tasks.append({
+                    "url": eps["url"],
+                    "ep_id": f"Episode {current_ep}",
+                    "current_ep": current_ep
+                })
+            
+            Utils.debugPrint(args, ID=11, tasks=tasks)
 
-                Utils.debugPrint(args, ID=6, ep_num=ep_num, url=url, current_ep=current_ep, ep_id=ep_id)
-                Yui.download(url, PATH_DOWNLOAD, anime_name, anime_saison, version, ep_id, current_ep, languages, langue)
+            # Si threadUserChoice = true alors dans se cas on lance le téléchargement de 4 épisode en même temps
+            if threadUserChoice:
+
+                # Setup des slot pour l'UI spécifique au thread
+                download_slots = queue.Queue()
+                
+                for i in range(max_workers):
+                    download_slots.put(i)
+
+                def download_wrapper(task_data):
+                    slot = download_slots.get()
+                    try:
+                        Yui.download(task_data["url"], PATH_DOWNLOAD, anime_name, anime_saison, version, task_data["ep_id"], task_data["current_ep"], languages, langue, slot_index=slot, total_slots=max_workers)
+                    finally:
+                        download_slots.put(slot)
+
+                print("\n" * max_workers) # Reserve lines
+                Cardinal.clearScreen()
+                with ThreadPoolExecutor(max_workers=max_workers) as executor:
+                    for download in tasks:
+                        Utils.debugPrint(args, ID=6, url=download["url"], current_ep=download["current_ep"], ep_id=download["ep_id"])
+                        executor.submit(download_wrapper, download)
+                Cardinal.clearScreen()
+            
+            # Sinon on le fait un par un
+            else:
+                for download in tasks:
+                    Utils.debugPrint(args, ID=6, url=download["url"], current_ep=download["current_ep"], ep_id=download["ep_id"])
+                    Yui.download(download["url"], PATH_DOWNLOAD, anime_name, anime_saison, version, download["ep_id"], download["current_ep"], languages, langue)
 
     except KeyboardInterrupt:
         print("\nShutdown...")
