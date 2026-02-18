@@ -142,18 +142,7 @@ class YuiCleanLogger:
 
         if d['status'] == 'finished':
             if self.slot_index is not None:
-                final_msg = self.languages[self.langue]["ytDlpFinish"]
                 filename = os.path.basename(d['filename'])
-                if len(filename) > 15:
-                    filename = filename[:12] + "..."
-                final_line = f"{filename}: {final_msg}"
-                
-                with print_lock:
-                    sys.stdout.write(Cursor.UP(self.total_slots - self.slot_index))
-                    sys.stdout.write(f"\r{final_line:<{terminal_width - 1}}")
-                    sys.stdout.write(Cursor.DOWN(self.total_slots - self.slot_index))
-                    sys.stdout.flush()
             else:
-                print(self.languages[self.langue]["ytDlpFinish"])
                 # Réinitialise la variable pour le prochain fichier à télécharger
                 self.path_printed = False

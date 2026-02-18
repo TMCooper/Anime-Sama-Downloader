@@ -63,16 +63,19 @@ def main():
         Utils.debugPrint(args, ID=10, threadUserChoice=threadUserChoice)
 
         try:
-            thread_count_input = input(languages[langue]["threadCountAsk"])
-            if not thread_count_input.strip():
-                max_workers = 4
-            else:
-                max_workers = int(thread_count_input)
-                Utils.debugPrint(args, ID=12, thread_count_input=thread_count_input)
-                if max_workers < 1:
+            max_workers = 1
+            if threadUserChoice:
+                thread_count_input = input(languages[langue]["threadCountAsk"])
+                if not thread_count_input.strip():
                     max_workers = 4
+                else:
+                    max_workers = int(thread_count_input)
+                    Utils.debugPrint(args, ID=12, thread_count_input=thread_count_input)
+                    if max_workers < 1:
+                        max_workers = 4
         except (ValueError, KeyError):
             max_workers = 4
+
         Utils.debugPrint(args, ID=13, max_workers=max_workers)
 
         # Vérification de l'existance du fichier AnimeInfo.json et si il existe pas recuperation de celui ci 
@@ -152,23 +155,29 @@ def main():
                 def download_wrapper(task_data):
                     slot = download_slots.get()
                     try:
+                        Utils.debugPrint(args, ID=6, url=task_data["url"], current_ep=task_data["current_ep"], ep_id=task_data["ep_id"])
                         Yui.download(task_data["url"], PATH_DOWNLOAD, anime_name, anime_saison, version, task_data["ep_id"], task_data["current_ep"], languages, langue, slot_index=slot, total_slots=max_workers)
                     finally:
                         download_slots.put(slot)
 
-                print("\n" * max_workers) # Reserve lines
-                Cardinal.clearScreen()
+                if not args.debug:
+                    Cardinal.clearScreen()
+                
                 with ThreadPoolExecutor(max_workers=max_workers) as executor:
                     for download in tasks:
-                        Utils.debugPrint(args, ID=6, url=download["url"], current_ep=download["current_ep"], ep_id=download["ep_id"])
                         executor.submit(download_wrapper, download)
-                Cardinal.clearScreen()
             
             # Sinon on le fait un par un
             else:
                 for download in tasks:
                     Utils.debugPrint(args, ID=6, url=download["url"], current_ep=download["current_ep"], ep_id=download["ep_id"])
                     Yui.download(download["url"], PATH_DOWNLOAD, anime_name, anime_saison, version, download["ep_id"], download["current_ep"], languages, langue)
+                    if not args.debug:
+                        Cardinal.clearScreen()
+                
+            print(languages[langue]["ytDlpFinish"])
+            if not args.debug:
+                    Cardinal.clearScreen()
 
     except KeyboardInterrupt:
         print("\nShutdown...")
