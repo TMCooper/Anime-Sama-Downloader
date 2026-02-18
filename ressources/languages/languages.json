@@ -16,7 +16,9 @@
         "gitCheck": "Erreur : Git n'est pas installé. Veuillez d'abord installer Git. \nTéléchargement : https://git-scm.com/downloads",
         "otherSaisonChoice": "Si votre anime a un nom autre que 'saison' noté le ici : ",
         "statsChoice": "Envie de voir vos animes grimper dans le classement ? Activez le partage anonyme et visualisez les statistiques de la communauté en temps réel sur : https://animestats.fuyuki.me/api/renderStats",
-        "updateChoice": "S'il vous plait effectuer : git pull origin main"
+        "updateChoice": "S'il vous plait effectuer : git pull origin main",
+        "threadUserChoice": "Télécharger les épisodes en parallèle (plus rapide) ou un par un ?",
+        "threadCountAsk": "Combien d'épisodes voulez-vous télécharger en parallèle ? (Recommandé: 4) : "
     },
     "eng": {
         "fileNotFound": "File not found, recovering data... This may take some time, thank you for your patience...",
@@ -35,6 +37,8 @@
         "gitCheck": "Error: Git is not installed. Please install Git first. \nDownload: https://git-scm.com/downloads",
         "otherSaisonChoice": "If your anime has a name other than 'season', please write it here : ",
         "statsChoice": "Want to see your anime climb the rankings ? Enable anonymous sharing and view community statistics in real time at: https://animestats.fuyuki.me/api/renderStats",
-        "updateChoice": "Please perform : git pull origin main"
+        "updateChoice": "Please perform : git pull origin main",
+        "threadUserChoice": "Download episodes in parallel (faster) or one by one ?",
+        "threadCountAsk": "How many episodes do you want to download in parallel? (Recommended: 4): "
     }
 }
