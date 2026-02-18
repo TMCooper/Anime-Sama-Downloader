@@ -1,6 +1,11 @@
-import os, yt_dlp, random, time, requests, sys, shutil 
+import os, yt_dlp, random, time, requests, sys, shutil, threading
+import colorama
+from colorama import Cursor
 from yt_dlp.utils import DownloadError
 from function.Cardinal import *
+
+colorama.init()
+print_lock = threading.Lock()
 
 class Yui:
 
@@ -30,12 +35,12 @@ class Yui:
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0',
         }
 
-    def download(url, PATH_DOWNLOAD, anime_name, anime_saison, version, ep_id, current_ep, languages, langue):
+    def download(url, PATH_DOWNLOAD, anime_name, anime_saison, version, ep_id, current_ep, languages, langue, slot_index=None, total_slots=4):
         
         FINAL_PATH = os.path.join(PATH_DOWNLOAD, anime_name, version, anime_saison)
 
         try:
-            cleanLogger = YuiCleanLogger(languages, langue)
+            cleanLogger = YuiCleanLogger(languages, langue, slot_index, total_slots)
 
             os.makedirs(FINAL_PATH, exist_ok=True)
 
@@ -53,7 +58,9 @@ class Yui:
                 ydl.download([url])
             
             time.sleep(random.randint(3, 7)) # Rallentissement du code aleatoire pour evité un ban ip
-            Cardinal.clearScreen()
+            
+            if slot_index is None:
+                Cardinal.clearScreen()
 
         except (DownloadError, KeyboardInterrupt) as e:
             Cardinal.log_error(anime_name, anime_saison, current_ep, e, languages, langue)
@@ -71,10 +78,12 @@ class Yui:
 
 
 class YuiCleanLogger:
-    def __init__(self, languages, langue):
+    def __init__(self, languages, langue, slot_index=None, total_slots=4):
         self.path_printed = False
         self.languages = languages
         self.langue = langue
+        self.slot_index = slot_index
+        self.total_slots = total_slots
 
     def debug(self, msg):
         # print(msg) # A décommentez pour le débug
@@ -85,32 +94,66 @@ class YuiCleanLogger:
         pass # Ignore les avertissements
 
     def error(self, msg):
-        print(msg)
+        if self.slot_index is not None:
+            with print_lock:
+                 # Best effort error printing in threaded mode
+                sys.stdout.write(f"\nError in thread {self.slot_index}: {msg}\n")
+        else:
+            print(msg)
 
     def hook(self, d):
-        if d['status'] == 'downloading':
-            if not self.path_printed:
-                print(f"Destination: {d['filename']}")
-                self.path_printed = True
+        try:
+            # Récupère la largeur actuelle du terminal
+            terminal_width = shutil.get_terminal_size().columns
+        except OSError:
+                # Largeur par défaut pour éviter les crashes    
+            terminal_width = 80
 
+        if d['status'] == 'downloading':
             # La ligne de progression qui se met à jour
             progress_line = (
                 f"[download] {d['_percent_str']} of {d.get('total_bytes_str', 'N/A')}"
                 f" at {d['_speed_str']} ETA {d['_eta_str']}"
             )
             
-            try:
-                # Récupère la largeur actuelle du terminal
-                terminal_width = shutil.get_terminal_size().columns
-            except OSError:
-                 # Largeur par défaut pour éviter les crashes    
-                terminal_width = 80
+            if self.slot_index is not None:
+                # In threaded mode, prepend filename short version to know what is downloading
+                filename = os.path.basename(d['filename'])
+                if len(filename) > 15:
+                    filename = filename[:12] + "..."
+                progress_line = f"{filename}: {progress_line}"
+                
+                # Truncate to fit terminal
+                line_to_write = f"\r{progress_line:<{terminal_width - 1}}"
+                
+                with print_lock:
+                    sys.stdout.write(Cursor.UP(self.total_slots - self.slot_index))
+                    sys.stdout.write(line_to_write)
+                    sys.stdout.write(Cursor.DOWN(self.total_slots - self.slot_index))
+                    sys.stdout.flush()
+            else:
+                if not self.path_printed:
+                    print(f"Destination: {d['filename']}")
+                    self.path_printed = True
             
-            line_to_write = f"\r{progress_line:<{terminal_width - 1}}"
-            sys.stdout.write(line_to_write) 
-            sys.stdout.flush()
+                line_to_write = f"\r{progress_line:<{terminal_width - 1}}"
+                sys.stdout.write(line_to_write) 
+                sys.stdout.flush()
 
         if d['status'] == 'finished':
-            print(self.languages[self.langue]["ytDlpFinish"])
-            # Réinitialise la variable pour le prochain fichier à télécharger
-            self.path_printed = False
+            if self.slot_index is not None:
+                final_msg = self.languages[self.langue]["ytDlpFinish"]
+                filename = os.path.basename(d['filename'])
+                if len(filename) > 15:
+                    filename = filename[:12] + "..."
+                final_line = f"{filename}: {final_msg}"
+                
+                with print_lock:
+                    sys.stdout.write(Cursor.UP(self.total_slots - self.slot_index))
+                    sys.stdout.write(f"\r{final_line:<{terminal_width - 1}}")
+                    sys.stdout.write(Cursor.DOWN(self.total_slots - self.slot_index))
+                    sys.stdout.flush()
+            else:
+                print(self.languages[self.langue]["ytDlpFinish"])
+                # Réinitialise la variable pour le prochain fichier à télécharger
+                self.path_printed = False

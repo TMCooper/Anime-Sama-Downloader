@@ -1,5 +1,6 @@
 import platform, json, os, subprocess, shutil
 from InquirerPy import inquirer
+from InquirerPy.base import Choice
 from datetime import datetime
 
 PATH = os.getcwd()
@@ -11,6 +12,20 @@ class Cardinal:
 
     SAISON_OPTIONS = ["saison", "film", "oav", "autre"]
     VERSION_OPTIONS = ["vostfr", "vf"]
+
+    #Choix disponible a incrementé si il y a plus que FR et ENG
+    THREAD_OPTIONS = {
+        "fr": [
+            Choice(name="Oui (Plus rapide, 4 épisodes à la fois)", value="Oui"),
+            Choice(name="Non (Un par un, plus stable)", value="Non")
+        ],
+        "eng": [
+            Choice(name="Yes (Faster, 4 episodes at once)", value="Yes"),
+            Choice(name="No (One by one, more stable)", value="No")
+        ],
+    }
+
+    TRUE_VALUES = {"oui", "yes"}
 
     OUTPUT_DIRECTORY = "Logs"
     
@@ -91,11 +106,21 @@ class Utils:
                 case 5:
                     print(f"[DEBUG] anime_data : {kwargs.get('anime_data')} \n[DEBUG] anime_name : {kwargs.get('anime_name')} \n[DEBUG] anime_saison : {kwargs.get('anime_saison')} \n[DEBUG] all_episodes : {kwargs.get('all_episodes')}")
                 case 6:
-                    print(f"[DEBUG] ep_num : {kwargs.get('ep_num')} \n[DEBUG] url : {kwargs.get('url')} \n[DEBUG] current_ep : {kwargs.get('current_ep')}, \n[DEBUG] ep_id : {kwargs.get('ep_id')}")
+                    print(f"[DEBUG] url : {kwargs.get('url')} \n[DEBUG] current_ep : {kwargs.get('current_ep')}, \n[DEBUG] ep_id : {kwargs.get('ep_id')}")
                 case 7:
                     print(f"[DEBUG] Local  : {kwargs.get('local_hash')} \n[DEBUG] Remote : {kwargs.get('remote_hash')}")
                 case 8:
                     print(f"[DEBUG] choix : {kwargs.get('etat')}")
+                case 9:
+                    print(f"[DEBUG] threadUserChoice : {kwargs.get('threadUserChoice')}")
+                case 10:
+                    print(f"[DEBUG] threadUserChoice post Cardinal.TRUE_VALUES : {kwargs.get('threadUserChoice')}")
+                case 11:
+                    print(f"[DEBUG] tasks : {kwargs.get('tasks')} ")
+                case 12:
+                    print(f"[DEBUG] thread_count_input : {kwargs.get('thread_count_input')}")
+                case 13:
+                    print(f"[DEBUG] max_workers : {kwargs.get('max_workers')}")
                 case _:
                     print("Erreur, ID hors de l'index")
 
