@@ -95,6 +95,7 @@ The downloader will automatically process your request and stop when it's comple
 
 ## Recent Updates
 
+- You can now download episodes sequentially or in parallel (e.g., 2, 5, or more at a time). Note: using too many threads may impact your system performance.
 - Update submodule 
 - New system for update notifications and anonymous stats collection [here](https://animestats.fuyuki.me/api/renderStats). 
   (The file `ressources/Utils/statsChoices.json` will be created at first run. 
