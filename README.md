@@ -60,14 +60,6 @@ python main.py
 >   python main.py --port 5001
 >   ```
 
-### Playwright Installation
-If you see this message after installation:
-```
-Looks like Playwright was just installed or updated.
-Please run the following command to download new browsers:
-playwright install
-```
-
 Simply run (in your virtual environment):
 ```bash
 playwright install
