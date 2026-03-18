@@ -1,3 +1,5 @@
+# TODO Gestion du ctl c dans les thread ?
+
 import time, os, requests, logging, argparse, queue
 from threading import Thread
 from concurrent.futures import ThreadPoolExecutor # Utilitaire de gestion pour le multi thread
