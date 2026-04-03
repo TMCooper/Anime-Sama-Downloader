@@ -128,8 +128,12 @@ def main():
                 
                 if statChoice == True:
                     total_episodes = max(ep["episode"] for ep in all_episodes) + 1
-                    requests.get(f"https://animestats.fuyuki.me/api/stats?n={anime_name}&s={anime_saison}&e={total_episodes}") # Requeste l'api uniquement si l'utilisateur est d'accord
-                
+                    try:
+                        response = requests.get(f"https://animestats.fuyuki.me/api/stats?n={anime_name}&s={anime_saison}&e={total_episodes}") # Requeste l'api uniquement si l'utilisateur est d'accord
+                        if response != 200:
+                            pass
+                    except requests.exceptions.ConnectionError:
+                        pass
                 break
 
         if all_episodes:
