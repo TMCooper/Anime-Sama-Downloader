@@ -60,11 +60,6 @@ python main.py
 >   python main.py --port 5001
 >   ```
 
-Simply run (in your virtual environment):
-```bash
-playwright install
-```
-
 ## Usage
 
 >[!IMPORTANT]
