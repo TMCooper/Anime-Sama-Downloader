@@ -10,7 +10,6 @@ A fast and efficient downloader for anime from Anime-Sama.
 
 - [Anime-Sama-Downloader](#anime-sama-downloader)
   - [Installation](#installation)
-    - [Playwright Installation](#playwright-installation)
   - [Usage](#usage)
   - [Important Warning](#important-warning)
   - [Recent Updates](#recent-updates)
@@ -68,9 +67,10 @@ python main.py
 1. Verify your anime exists on [Anime-Sama](https://anime-sama.org)
 2. Launch `main.py`
 3. Enter the anime name (e.g., "Frieren")
-4. choose between ``saison`` (season) ``film`` (movie), ``oav`` and ``autre`` (other)
+4. choose between ``saison`` (season) ``film`` (movie), ``oav``, ``scans`` and ``autre`` (other)
    - Note: If you choose ``saison`` (season) keep in mind that if the field is empty, it will default to the first season
-5. Choose the version: `vostfr` or `vf`
+   - Note: If you choose ``scans`` keep in mind that if the field is empty the default is all the chapter you can download
+5. Choose the version: `vostfr` or `vf` (not for the scans download)
 
 The downloader will automatically process your request and stop when it's complete.
 
@@ -104,7 +104,8 @@ Have an idea ? Share it in our [Ideas Discussion](https://github.com/TMCooper/An
 You can acces de site [here](https://animestats.fuyuki.me/api/renderStats) and for any issue you can go to the repo [here](https://github.com/TMCooper/AnimeStatsAPI)
 
 ## Comming soon
-- Update demo.gif
+- Threading for scan downloader
+- Debug for the new function and system
 
 ## Demo
 

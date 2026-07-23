@@ -76,6 +76,16 @@ class Yui:
         with open(Yui.PATH_LANGUAGE, "w", encoding="utf-8") as f:
             json.dump(reponse, f, indent=4, ensure_ascii=False)
 
+    def scanDownload(url, PATH_DOWNLOAD, anime_name, version, chap_name, page_num):
+        SCAN_PATH = os.path.join(PATH_DOWNLOAD, anime_name, "scans", version, chap_name)
+        os.makedirs(SCAN_PATH, exist_ok=True)
+
+        reponse = requests.get(url)
+        file_path = os.path.join(SCAN_PATH, f"page_{page_num}.jpg")
+
+        with open(file_path, "wb") as file:
+            file.write(reponse.content)
+
 
 class YuiCleanLogger:
     def __init__(self, languages, langue, slot_index=None, total_slots=4):

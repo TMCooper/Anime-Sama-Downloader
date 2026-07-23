@@ -10,8 +10,9 @@ STATS_CHOICE_FILE = os.path.join(PATH_STATS_FOLDER, "statsChoices.json")
 
 class Cardinal:
 
-    SAISON_OPTIONS = ["saison", "film", "oav", "autre"]
+    SAISON_OPTIONS = ["saison", "film", "oav", "scans", "autre"]
     VERSION_OPTIONS = ["vostfr", "vf"]
+    SCANS_OPTIONS = ["all", "specifique"]
 
     #Choix disponible a incrementé si il y a plus que FR et ENG
     THREAD_OPTIONS = {

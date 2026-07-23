@@ -106,9 +106,33 @@ def main():
         if saison == "autre":
                 saison = str(input(languages[langue]["otherSaisonChoice"]))
 
-        version = Cardinal.ask(languages[langue]["version"], Cardinal.VERSION_OPTIONS) # Ancienne ligne # version = input(languages[langue]["version"]).strip().lower()
+        if saison == "scans":
+            version = Cardinal.VERSION_OPTIONS[1]
+        else:
+            version = Cardinal.ask(languages[langue]["version"], Cardinal.VERSION_OPTIONS) # Ancienne ligne # version = input(languages[langue]["version"]).strip().lower()
 
         Utils.debugPrint(args, ID=4, choixAnime=choixAnime, saison=saison, version=version) # Dédier au debug dans le cas ou saison et version n'affiche rien il valent la valeur que l'api leur donne donc saison1 et vostfr 
+
+        if saison == "scans": # Si on dois télécharger les scan on ne passera pas par le while car celui ci est fait pour les épisode non pas les scan
+            chapitre = Cardinal.ask(languages[langue]["scansChapterAsk"], Cardinal.SCANS_OPTIONS)
+
+            if chapitre == "all":
+                scan_data = requests.get(f"http://{ip}:{port}/api/getScanLink?n={choixAnime}").json()
+                for chap_name, image_list in scan_data.items():
+                    # print(f"\n{chap_name}")
+                    for page_num, url in enumerate(image_list, start=1):
+                        Yui.scanDownload(url, PATH_DOWNLOAD, choixAnime, version, chap_name, page_num)
+                        # print(url)
+            else:
+                chapitre = input(languages[langue]["scansChapterUser"])
+                scan_data = requests.get(f"http://{ip}:{port}/api/getScanLink?n={choixAnime}&c={chapitre}").json()
+
+                chap_key = f"Chapitre {chapitre}"
+
+                for page_num, url in enumerate(scan_data[chap_key], start=1):
+                    Yui.scanDownload(url, PATH_DOWNLOAD, choixAnime, version, chap_key, page_num)
+                    # print(url)
+            exit()
 
         while True:
             if not choixAnime:
