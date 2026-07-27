@@ -104,7 +104,6 @@ Have an idea ? Share it in our [Ideas Discussion](https://github.com/TMCooper/An
 You can acces de site [here](https://animestats.fuyuki.me/api/renderStats) and for any issue you can go to the repo [here](https://github.com/TMCooper/AnimeStatsAPI)
 
 ## Comming soon
-- Threading for scan downloader
 - Debug for the new function and system
 
 ## Demo

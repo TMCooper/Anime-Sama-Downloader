@@ -20,7 +20,9 @@
         "threadUserChoice": "Télécharger les épisodes en parallèle (plus rapide) ou un par un ?",
         "threadCountAsk": "Combien d'épisodes voulez-vous télécharger en parallèle ? (Recommandé: 4) : ",
         "scansChapterAsk" : "Souhaitez-vous un chapitre spécifique ou tous les chapitres ?",
-        "scansChapterUser" : "Quel chapitre souhaité vous télécharger ? : "
+        "scansChapterUser" : "Quel chapitre souhaité vous télécharger ? : ",
+        "scansDownloadStart" : "Votre téléchargement a commencer ...",
+        "scansDownloadEnd": "Le téléchargement est terminé. Appuyez sur Entrée."
     },
     "eng": {
         "fileNotFound": "File not found, recovering data... This may take some time, thank you for your patience...",
@@ -43,6 +45,8 @@
         "threadUserChoice": "Download episodes in parallel (faster) or one by one ?",
         "threadCountAsk": "How many episodes do you want to download in parallel ? (Recommended: 4): ",
         "scansChapterAsk": "Do you want a specific chapter or all chapters ?",
-        "scansChapterUser": "Which chapter do you want to download ? : "
+        "scansChapterUser": "Which chapter do you want to download ? : ",
+        "scansDownloadStart": "Your download has started...",
+        "scansDownloadEnd": "The download is complete. Press Enter."
     }
 }

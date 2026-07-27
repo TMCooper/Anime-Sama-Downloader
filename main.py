@@ -2,7 +2,7 @@
 
 import time, os, requests, logging, argparse, queue
 from threading import Thread
-from concurrent.futures import ThreadPoolExecutor # Utilitaire de gestion pour le multi thread
+from concurrent.futures import ThreadPoolExecutor, as_completed # Utilitaire de gestion pour le multi thread
 from AnimeSamaApi.main import Api
 from AnimeSamaApi.src.backend import PATH_DIR, PATH_ANIME # Pour verifier si le fichier AnimeInfo.json est bien la
 from function.Yui import *
@@ -114,6 +114,9 @@ def main():
         Utils.debugPrint(args, ID=4, choixAnime=choixAnime, saison=saison, version=version) # Dédier au debug dans le cas ou saison et version n'affiche rien il valent la valeur que l'api leur donne donc saison1 et vostfr 
 
         if saison == "scans": # Si on dois télécharger les scan on ne passera pas par le while car celui ci est fait pour les épisode non pas les scan
+
+            tasks = []
+
             chapitre = Cardinal.ask(languages[langue]["scansChapterAsk"], Cardinal.SCANS_OPTIONS)
 
             if chapitre == "all":
@@ -121,7 +124,7 @@ def main():
                 for chap_name, image_list in scan_data.items():
                     # print(f"\n{chap_name}")
                     for page_num, url in enumerate(image_list, start=1):
-                        Yui.scanDownload(url, PATH_DOWNLOAD, choixAnime, version, chap_name, page_num)
+                        tasks.append((url, PATH_DOWNLOAD, choixAnime, version, chap_name, page_num))
                         # print(url)
             else:
                 chapitre = input(languages[langue]["scansChapterUser"])
@@ -130,8 +133,25 @@ def main():
                 chap_key = f"Chapitre {chapitre}"
 
                 for page_num, url in enumerate(scan_data[chap_key], start=1):
-                    Yui.scanDownload(url, PATH_DOWNLOAD, choixAnime, version, chap_key, page_num)
+                    tasks.append((url, PATH_DOWNLOAD, choixAnime, version, chap_key, page_num))
                     # print(url)
+            
+            if not args.debug:
+                Cardinal.clearScreen()
+
+            print(languages[langue]["scansDownloadStart"])
+            with ThreadPoolExecutor(max_workers=max_workers) as executor:
+                for task in tasks:
+                    executor.submit(Yui.scanDownload, *task)
+
+            if not args.debug:
+                Cardinal.clearScreen()
+
+            input(languages[langue]["scansDownloadEnd"])
+
+            if not args.debug:
+                Cardinal.clearScreen()
+
             exit()
 
         while True:
