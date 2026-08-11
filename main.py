@@ -118,13 +118,14 @@ def main():
             tasks = []
 
             chapitre = Cardinal.ask(languages[langue]["scansChapterAsk"], Cardinal.SCANS_OPTIONS)
+            folder_name = choixAnime.replace("%20", " ")
 
             if chapitre == "all":
                 scan_data = requests.get(f"http://{ip}:{port}/api/getScanLink?n={choixAnime}").json()
                 for chap_name, image_list in scan_data.items():
                     # print(f"\n{chap_name}")
                     for page_num, url in enumerate(image_list, start=1):
-                        tasks.append((url, PATH_DOWNLOAD, choixAnime, version, chap_name, page_num))
+                        tasks.append((url, PATH_DOWNLOAD, folder_name, version, chap_name, page_num))
                         # print(url)
             else:
                 chapitre = input(languages[langue]["scansChapterUser"])
@@ -133,7 +134,7 @@ def main():
                 chap_key = f"Chapitre {chapitre}"
 
                 for page_num, url in enumerate(scan_data[chap_key], start=1):
-                    tasks.append((url, PATH_DOWNLOAD, choixAnime, version, chap_key, page_num))
+                    tasks.append((url, PATH_DOWNLOAD, folder_name, version, chap_key, page_num))
                     # print(url)
             
             if not args.debug:
