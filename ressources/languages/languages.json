@@ -1,6 +1,6 @@
 {
     "fr": {
-        "fileNotFound": "Fichier introuvable, récupération des données... Cela peut prendre un certain temps, merci de votre patience...",
+        "fileNotFound": "Fichier introuvable, récupération des données du site... Cela peut prendre un certain temps, merci de votre patience... et sont stocker dans AnimeSamaApi/src/data/AnimeInfo.json",
         "errorRequets": "Erreur lors de la requête : {erreur}",
         "animeName": "Quel est le nom de votre anime ? : ",
         "forcedNameAnime": "Veuillez écrire le nom de votre anime : ",
@@ -25,7 +25,7 @@
         "scansDownloadEnd": "Le téléchargement est terminé. Appuyez sur Entrée."
     },
     "eng": {
-        "fileNotFound": "File not found, recovering data... This may take some time, thank you for your patience...",
+        "File Not Found": "File not found, retrieving site data... This may take some time, thank you for your patience... and are stored in AnimeSamaApi/src/data/AnimeInfo.json",
         "errorRequets": "Error during query: {erreur}",
         "animeName": "What is the name of your anime? : ",
         "forcedNameAnime": "Please write the name of your anime: ",
