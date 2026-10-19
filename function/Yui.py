@@ -62,6 +62,11 @@ class Yui:
             if slot_index is None:
                 Cardinal.clearScreen()
 
+            if Utils.check_vid(FINAL_PATH, f"{ep_id}.mp4"): # Cas ou la video n'est pas corrompu
+                pass
+            else:
+                Cardinal.log_error(anime_name, anime_saison, current_ep, "corrupt files", languages, langue)
+
         except (DownloadError, KeyboardInterrupt) as e:
             Cardinal.log_error(anime_name, anime_saison, current_ep, e, languages, langue)
             exit()
