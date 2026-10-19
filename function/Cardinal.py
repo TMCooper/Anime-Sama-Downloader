@@ -157,3 +157,23 @@ class Utils:
         if shutil.which("git") is None:
             print(languages[langue]["gitCheck"])
             exit(1)
+
+    def check_vid(VID_PATH):        
+        # Commande FFmpeg pour lire tous le fichier
+        # -v error      :       affiche uniquement les vraies erreurs de décodage
+        # -i            :       le fichier d'entrée
+        # -f null -     :       envoie le résultat dans le vide (rapide)
+        commande = [
+            'ffmpeg', '-v', 'error', '-i', VID_PATH, '-f', 'null', '-'
+        ]
+        
+        # Exécution du décodage
+        resultat = subprocess.run(commande, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+            
+        # Si stderr contient du texte, il y a des erreurs dans le flux
+        if resultat.stderr:
+            # print(resultat.stderr)
+            return False # La vidéo contient des parties corrompues
+        else:
+            return True # La video ne contient pas de corruption.
+        
