@@ -225,7 +225,7 @@ def main():
                     Yui.download(download["url"], PATH_DOWNLOAD, anime_name, anime_saison, version, download["ep_id"], download["current_ep"], languages, langue)
                     if not args.debug:
                         Cardinal.clearScreen()
-                
+
             print(languages[langue]["ytDlpFinish"])
             if not args.debug:
                     Cardinal.clearScreen()
