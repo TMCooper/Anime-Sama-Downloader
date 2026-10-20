@@ -62,7 +62,8 @@ class Yui:
             if slot_index is None:
                 Cardinal.clearScreen()
 
-            if Utils.check_vid(FINAL_PATH, f"{ep_id}.mp4"): # Cas ou la video n'est pas corrompu
+            VID_PATH = os.path.join(FINAL_PATH, f"{ep_id}.mp4")
+            if Utils.check_vid(VID_PATH): # Cas ou la video n'est pas corrompu
                 pass
             else:
                 Cardinal.log_error(anime_name, anime_saison, current_ep, "corrupt files", languages, langue)
