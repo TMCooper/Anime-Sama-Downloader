@@ -22,7 +22,9 @@
         "scansChapterAsk" : "Souhaitez-vous un chapitre spécifique ou tous les chapitres ?",
         "scansChapterUser" : "Quel chapitre souhaité vous télécharger ? : ",
         "scansDownloadStart" : "Votre téléchargement a commencer ...",
-        "scansDownloadEnd": "Le téléchargement est terminé. Appuyez sur Entrée."
+        "scansDownloadEnd": "Le téléchargement est terminé. Appuyez sur Entrée.",
+        "EpOrSeason" : "Voulez vous télécharger un episodes spécifique ?",
+        "AskSpecificEp" : "Quel episode voulez-vous télécharger ? : "
     },
     "eng": {
         "File Not Found": "File not found, retrieving site data... This may take some time, thank you for your patience... and are stored in AnimeSamaApi/src/data/AnimeInfo.json",
@@ -47,6 +49,8 @@
         "scansChapterAsk": "Do you want a specific chapter or all chapters ?",
         "scansChapterUser": "Which chapter do you want to download ? : ",
         "scansDownloadStart": "Your download has started...",
-        "scansDownloadEnd": "The download is complete. Press Enter."
+        "scansDownloadEnd": "The download is complete. Press Enter.",
+        "EpOrSeason": "Do you want to download a specific episode ?",
+        "AskSpecificEp": "Which episode do you want to download ? : "
     }
 }
