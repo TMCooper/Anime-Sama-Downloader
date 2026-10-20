@@ -13,6 +13,16 @@ class Cardinal:
     SAISON_OPTIONS = ["saison", "film", "oav", "scans", "autre"]
     VERSION_OPTIONS = ["vostfr", "vf"]
     SCANS_OPTIONS = ["all", "specifique"]
+    EP_OR_SEASON = {
+        "fr": [
+            Choice(name="Oui", value="Oui"),
+            Choice(name="Non", value="Non")
+        ],
+        "eng": [
+            Choice(name="Yes", value="Yes"),
+            Choice(name="No", value="No")
+        ],
+    }
 
     #Choix disponible a incrementé si il y a plus que FR et ENG
     THREAD_OPTIONS = {
@@ -65,7 +75,6 @@ class Cardinal:
     
     @staticmethod
     def getStatsChoice(args, languages, langue): # Demande a l'utilisateur si il accèpte de participer ou non
-        print(PATH_STATS_FOLDER);
         os.makedirs(PATH_STATS_FOLDER, exist_ok=True)
         if not os.path.isfile(STATS_CHOICE_FILE):
             choix = Cardinal.ask(languages[langue]["statsChoice"], languages[langue]["YesNo"])
