@@ -64,6 +64,7 @@ def main():
         ep_or_season = Cardinal.ask(languages[langue]["EpOrSeason"], Cardinal.EP_OR_SEASON.get(langue))
 
         if ep_or_season.lower() not in ["yes", "oui"]:
+            specific_ep = False
             threadUserChoice = Cardinal.ask(languages[langue]["threadUserChoice"], Cardinal.THREAD_OPTIONS.get(langue))
             Utils.debugPrint(args, ID=9, threadUserChoice=threadUserChoice)
 
@@ -212,7 +213,7 @@ def main():
             
             Utils.debugPrint(args, ID=11, tasks=tasks)
 
-            # Si threadUserChoice = true alors dans se cas on lance le téléchargement de 4 épisode en même temps
+            # Si threadUserChoice = true alors dans se cas on lance le téléchargement des épisodes en même temps
             if threadUserChoice:
 
                 # Setup des slot pour l'UI spécifique au thread
