@@ -3,7 +3,7 @@ import os, subprocess, sys, platform
 PATH = os.path.dirname(os.path.abspath(__file__))
 PATH_DOWNLOADER_REQUIREMENTS = os.path.join(PATH, "requirements.txt") # Pointe vers les dependence de l'api
 
-def setup_env(env_name="AnimeSamaEnv", requirements_file=PATH_DOWNLOADER_REQUIREMENTS):
+def setup_env(env_name=".venv", requirements_file=PATH_DOWNLOADER_REQUIREMENTS):
     # 1. Vérifier si le dossier d'environnement existe
     if not os.path.exists(env_name):
         print(f"Création de l'environnement virtuel '{env_name}'...")
@@ -34,6 +34,6 @@ def setup_env(env_name="AnimeSamaEnv", requirements_file=PATH_DOWNLOADER_REQUIRE
 if __name__ == "__main__":
     python_env = setup_env()
     if os.name == "nt":
-        print(r"Commande pour lancer votre env sous windows : .\AnimeSamaEnv\Scripts\activate")
+        print(r"Commande pour lancer votre env sous windows : .venv\Scripts\activate")
     else:  # Linux / macOS
-        print(r"Commande pour lancer votre env sous linux : source ./AnimeSamaEnv/bin/activate")
+        print(r"Commande pour lancer votre env sous linux : source .venv/bin/activate")
