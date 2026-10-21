@@ -22,42 +22,47 @@ A fast and efficient downloader for anime from Anime-Sama.
 ## Installation
 
 > [!IMPORTANT]
-> This project requires **Git** to be installed.  
-> Download: [here](https://git-scm.com/downloads)
+> This project requires **Git** and **uv** to be installed.  
+> Download Git: [here](https://git-scm.com/downloads)  
+> Install uv: [here](https://docs.astral.sh/uv/getting-started/installation/)
 
 1. Clone the repository with submodules:
 ```bash
 git clone https://github.com/TMCooper/Anime-Sama-Downloader.git --recurse-submodules
+cd Anime-Sama-Downloader
 ```
 
-2. Run the setup:
+2. Install the dependencies:
 ```bash
-python setup.py
+uv sync
 ```
 
-3. Launch the application (after entering the environment):
+3. Launch the application:
 ```bash
-python main.py
+uv run main.py
 ```
 
 > [!NOTE]
 > - To launch in debug mode, simply run:
 >   ```bash
->   python main.py --debug
+>   uv run main.py --debug
 >   ```
 > - To launch the API with a specific IP and port, run:
 >   ```bash
->   python main.py --ip 127.0.0.1 --port 5001
+>   uv run main.py --ip 127.0.0.1 --port 5001
 >   ```
 >   Or using shorthand options:
 >   ```bash
->   python main.py -i 127.0.0.1 -p 5001
+>   uv run main.py -i 127.0.0.1 -p 5001
 >   ```
 > - You can also specify only the IP or only the port:
 >   ```bash
->   python main.py --ip 127.0.0.1
->   python main.py --port 5001
+>   uv run main.py --ip 127.0.0.1
+>   uv run main.py --port 5001
 >   ```
+
+> [!TIP]
+> Without uv, you can still use the previous method: run `python setup.py`, enter the `AnimeSamaEnv` environment, then run `python main.py`.
 
 ## Usage
 
