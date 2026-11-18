@@ -2,7 +2,8 @@
 
 import time, os, requests, logging, argparse, queue
 from threading import Thread
-from concurrent.futures import ThreadPoolExecutor # Utilitaire de gestion pour le multi thread
+from concurrent.futures import ThreadPoolExecutor, as_completed # Utilitaire de gestion pour le multi thread et gestion des erreurs
+from collections import defaultdict
 from AnimeSamaApi.main import Api
 from AnimeSamaApi.src.backend import PATH_DIR, PATH_ANIME # Pour verifier si le fichier AnimeInfo.json est bien la
 from function.Yui import *
@@ -155,13 +156,44 @@ def main():
             if not args.debug:
                 Cardinal.clearScreen()
 
+            futures = {}
+
+            erreurs_par_chapitre = defaultdict(list)
+
             print(languages[langue]["scansDownloadStart"])
             with ThreadPoolExecutor(max_workers=max_workers) as executor:
                 for task in tasks:
-                    executor.submit(Yui.scanDownload, *task)
+                    future = executor.submit(Yui.scanDownload, *task) # On lance la tâche en arrière-plan et on récupère un objet "future" qui nous permettra ensuite de savoir si le processus c'est bien terminer
+                    futures[future] = task # On associe ce "future" à sa "task" d'origine dans le dictionnaire
+
+                for future in as_completed(futures):
+                    task = futures[future]
+
+                    url = task[0]
+                    chap_name = task[4]
+                    page_num = task[5]
+                    dossier_chapitre = os.path.join(PATH_DOWNLOAD, folder_name, version, chap_name) # On reconstruit le path vers l'endroit ou l'images du chapitre concerner dois être normalement stocké affin d'y déposer le fichier txt en cas de manquement
+                
+                    try:
+                        # Si Yui.scanDownload a eu une erreur
+                        future.result()
+
+                    except Exception as e:
+                        # print(f"Erreur : {chap_name}, page {page_num} : {e}")
+                        erreurs_par_chapitre[dossier_chapitre].append(f"Page {page_num} ({url})")
 
             if not args.debug:
                 Cardinal.clearScreen()
+
+            for dossier, images_manquantes in erreurs_par_chapitre.items():
+                if images_manquantes: # S'il y a des erreurs pour ce chapitre
+                    os.makedirs(dossier, exist_ok=True)
+                    chemin_fichier_log = os.path.join(dossier, "erreurs_missing_pages.txt")
+                    
+                    with open(chemin_fichier_log, "w", encoding="utf-8") as f:
+                        f.write(languages[langue]["MissingScansPages"])
+                        for img in images_manquantes:
+                            f.write(f"- {img}\n")
 
             input(languages[langue]["scansDownloadEnd"])
 

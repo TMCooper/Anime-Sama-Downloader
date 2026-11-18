@@ -24,7 +24,8 @@
         "scansDownloadStart" : "Votre téléchargement a commencer ...",
         "scansDownloadEnd": "Le téléchargement est terminé. Appuyez sur Entrée.",
         "EpOrSeason" : "Voulez vous télécharger un episodes spécifique ?",
-        "AskSpecificEp" : "Quel episode voulez-vous télécharger ? : "
+        "AskSpecificEp" : "Quel episode voulez-vous télécharger ? : ",
+        "MissingScansPages" : "Les pages suivantes n'ont pas pu être téléchargées :\n\n"
     },
     "eng": {
         "File Not Found": "File not found, retrieving site data... This may take some time, thank you for your patience... and are stored in AnimeSamaApi/src/data/AnimeInfo.json",
@@ -51,6 +52,7 @@
         "scansDownloadStart": "Your download has started...",
         "scansDownloadEnd": "The download is complete. Press Enter.",
         "EpOrSeason": "Do you want to download a specific episode ?",
-        "AskSpecificEp": "Which episode do you want to download ? : "
+        "AskSpecificEp": "Which episode do you want to download ? : ",
+        "MissingScansPages": "The following pages could not be downloaded :\n\n"
     }
 }
