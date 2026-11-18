@@ -87,6 +87,8 @@ The downloader will automatically process your request and stop when it's comple
 
 ## Recent Updates
 
+- addition of a logging system for [missing scan pages](https://github.com/TMCooper/Anime-Sama-Downloader/pull/7)
+- Migration to [support uv](https://github.com/TMCooper/Anime-Sama-Downloader/pull/5)
 - You can now download episodes sequentially or in parallel (e.g., 2, 5, or more at a time). Note: using too many threads may impact your system performance.
 - Update submodule 
 - New system for update notifications and anonymous stats collection [here](https://animestats.fuyuki.me/api/renderStats). 
